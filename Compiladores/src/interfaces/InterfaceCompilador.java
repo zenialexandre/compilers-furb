@@ -7,19 +7,13 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JLabel;
-import javax.swing.JSeparator;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
-
 import java.awt.TextArea;
-import java.awt.Panel;
 
 //@SuppressWarnings("deprecation")
 public class InterfaceCompilador {
@@ -54,24 +48,14 @@ public class InterfaceCompilador {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
+		frame = new JFrame("Compilador");
 		frame.setBounds(500, 500, 1100, 600);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.createStatusBar(frame);
 		this.createToolsBar(frame);
-		this.createMessageArea(frame);
 		this.createEditorArea(frame);
-	}
-
-	private void createStatusBar(JFrame frame) {
-		JPanel statusBarPanel = new JPanel();
-		statusBarPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
-		frame.getContentPane().add(statusBarPanel, BorderLayout.SOUTH);
-		JLabel statusBarLabel = new JLabel("aqui iria o caminho do file");
-		statusBarLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		statusBarPanel.add(statusBarLabel);
-		statusBarPanel.setPreferredSize(new Dimension(900, 25));
+		this.createMessageArea(frame);
+		this.createStatusBar(frame);
 	}
 
 	private void createToolsBar(JFrame frame) {
@@ -138,16 +122,26 @@ public class InterfaceCompilador {
 			groupItem.setIcon(new ImageIcon(groupIcon));
 		}
 	}
-	
-	private void createMessageArea(JFrame frame) {
-		TextArea messageTextArea = new TextArea(5, 10);
-		messageTextArea.setEditable(false);
-		frame.getContentPane().add(messageTextArea, BorderLayout.CENTER);
-	}
-	
+
 	private void createEditorArea(JFrame frame) {
 		TextArea editorTextArea = new TextArea(20, 10);
 		frame.getContentPane().add(editorTextArea, BorderLayout.NORTH);
+	}
+	
+	private void createMessageArea(JFrame frame) {
+		TextArea messageTextArea = new TextArea("Aqui iriam as mensagens", 5, 10);
+		messageTextArea.setEditable(false);
+		frame.getContentPane().add(messageTextArea, BorderLayout.CENTER);
+	}
+
+	private void createStatusBar(JFrame frame) {
+		JPanel statusBarPanel = new JPanel();
+		statusBarPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
+		frame.getContentPane().add(statusBarPanel, BorderLayout.SOUTH);
+		JLabel statusBarLabel = new JLabel("aqui iria o caminho do file");
+		statusBarLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		statusBarPanel.add(statusBarLabel);
+		statusBarPanel.setPreferredSize(new Dimension(900, 25));
 	}
 
 	/*private String getCurrentDirectory() {
