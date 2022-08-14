@@ -10,6 +10,16 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JLabel;
+import javax.swing.JSeparator;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
+
+import java.awt.TextArea;
+import java.awt.Panel;
 
 //@SuppressWarnings("deprecation")
 public class InterfaceCompilador {
@@ -45,22 +55,23 @@ public class InterfaceCompilador {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(500, 500, 1010, 600);
+		frame.setBounds(500, 500, 1100, 600);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.createStatusBar(frame);
 		this.createToolsBar(frame);
+		this.createMessageArea(frame);
+		this.createEditorArea(frame);
 	}
 
 	private void createStatusBar(JFrame frame) {
-		//String directoryName = this.getCurrentDirectory();
-		JMenuBar statusBar = new JMenuBar();
-		JMenu statusBarMenu = new JMenu();
-		//statusBarMenu.setLabel(directoryName);
-		frame.getContentPane().setLayout(new BorderLayout());
-		frame.getContentPane().add(statusBar, BorderLayout.SOUTH);
-		statusBar.add(statusBarMenu);
-		statusBar.setPreferredSize(new Dimension(900, 25));
+		JPanel statusBarPanel = new JPanel();
+		statusBarPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
+		frame.getContentPane().add(statusBarPanel, BorderLayout.SOUTH);
+		JLabel statusBarLabel = new JLabel("aqui iria o caminho do file");
+		statusBarLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		statusBarPanel.add(statusBarLabel);
+		statusBarPanel.setPreferredSize(new Dimension(900, 25));
 	}
 
 	private void createToolsBar(JFrame frame) {
@@ -72,7 +83,7 @@ public class InterfaceCompilador {
 
 	private void createToolsBarItems(JMenuBar toolsBar) {
 		{
-			JMenuItem newFileItem = new JMenuItem("Abrir [ctrl + n]");
+			JMenuItem newFileItem = new JMenuItem("Novo [ctrl + r]");
 			Image newFileIcon = new ImageIcon(this.getClass().getResource("/new_file_icon.png")).getImage();
 			toolsBar.add(newFileItem);
 			newFileItem.setIcon(new ImageIcon(newFileIcon));
@@ -126,6 +137,17 @@ public class InterfaceCompilador {
 			toolsBar.add(groupItem);
 			groupItem.setIcon(new ImageIcon(groupIcon));
 		}
+	}
+	
+	private void createMessageArea(JFrame frame) {
+		TextArea messageTextArea = new TextArea(5, 10);
+		messageTextArea.setEditable(false);
+		frame.getContentPane().add(messageTextArea, BorderLayout.CENTER);
+	}
+	
+	private void createEditorArea(JFrame frame) {
+		TextArea editorTextArea = new TextArea(20, 10);
+		frame.getContentPane().add(editorTextArea, BorderLayout.NORTH);
 	}
 
 	/*private String getCurrentDirectory() {
