@@ -129,6 +129,7 @@ public class CompilerInterface {
 		JTextArea editorArea = new JTextArea();
 		editorPanel.add(editorArea);
 		TextLineNumber textLineNumber = new TextLineNumber(editorPanel, 1);
+		textLineNumber.setCurrentLineForeground(Color.CYAN);
 		editorPanel.add(textLineNumber, BorderLayout.WEST);
 		JScrollPane scrollEditorPane = new JScrollPane(editorPanel);
 		scrollEditorPane.setPreferredSize(new Dimension(900, 300));
