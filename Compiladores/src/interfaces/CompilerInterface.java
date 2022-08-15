@@ -124,14 +124,18 @@ public class CompilerInterface {
 		frame.getContentPane().add(splitPane, BorderLayout.CENTER);
 	}
 
-	private JTextArea createEditorArea() {
+	private JScrollPane createEditorArea() {
+		JTextPane editorPanel = new JTextPane();
 		JTextArea editorArea = new JTextArea();
-		JScrollPane scrollEditorPane = new JScrollPane(editorArea);
-		TextLineNumber textLineNumber = new TextLineNumber(editorArea);
-		editorArea.setPreferredSize(new Dimension(900, 300));
+		editorPanel.add(editorArea);
+		TextLineNumber textLineNumber = new TextLineNumber(editorPanel, 1);
+		editorPanel.add(textLineNumber, BorderLayout.WEST);
+		JScrollPane scrollEditorPane = new JScrollPane(editorPanel);
+		scrollEditorPane.setPreferredSize(new Dimension(900, 300));
 		scrollEditorPane.setRowHeaderView(textLineNumber);
-		//TextArea editorTextArea = new TextArea(20, 10);
-		return editorArea;
+		scrollEditorPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollEditorPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		return scrollEditorPane;
 	}
 
 	private TextArea createMessageArea() {
