@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import java.awt.TextArea;
+import javax.swing.JSplitPane;
 
 //@SuppressWarnings("deprecation")
 public class InterfaceCompilador {
@@ -21,9 +22,6 @@ public class InterfaceCompilador {
 	private JFrame frame;
 	private JMenuBar toolsBar;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -37,35 +35,28 @@ public class InterfaceCompilador {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public InterfaceCompilador() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame("Compilador");
 		frame.setBounds(500, 500, 1100, 600);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.createToolsBar(frame);
-		this.createEditorArea(frame);
-		this.createMessageArea(frame);
-		this.createStatusBar(frame);
+		this.createToolsBar();
+		this.createSplitPane();
+		this.createStatusBar();
 	}
 
-	private void createToolsBar(JFrame frame) {
+	private void createToolsBar() {
 		toolsBar = new JMenuBar();
 		frame.setJMenuBar(toolsBar);
 		toolsBar.setPreferredSize(new Dimension(900, 75));
-		this.createToolsBarItems(toolsBar);
+		this.createToolsBarItems();
 	}
 
-	private void createToolsBarItems(JMenuBar toolsBar) {
+	private void createToolsBarItems() {
 		{
 			JMenuItem newFileItem = new JMenuItem("Novo [ctrl + r]");
 			Image newFileIcon = new ImageIcon(this.getClass().getResource("/new_file_icon.png")).getImage();
@@ -122,19 +113,26 @@ public class InterfaceCompilador {
 			groupItem.setIcon(new ImageIcon(groupIcon));
 		}
 	}
-
-	private void createEditorArea(JFrame frame) {
-		TextArea editorTextArea = new TextArea(20, 10);
-		frame.getContentPane().add(editorTextArea, BorderLayout.NORTH);
-	}
 	
-	private void createMessageArea(JFrame frame) {
+	private void createSplitPane() {
+		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, this.createEditorArea(), this.createMessageArea());
+		splitPane.setOneTouchExpandable(true);
+		splitPane.setContinuousLayout(true);
+		frame.getContentPane().add(splitPane, BorderLayout.CENTER);
+	}
+
+	private TextArea createEditorArea() {
+		TextArea editorTextArea = new TextArea(20, 10);
+		return editorTextArea;
+	}
+
+	private TextArea createMessageArea() {
 		TextArea messageTextArea = new TextArea("Aqui iriam as mensagens", 5, 10);
 		messageTextArea.setEditable(false);
-		frame.getContentPane().add(messageTextArea, BorderLayout.CENTER);
+		return messageTextArea;
 	}
 
-	private void createStatusBar(JFrame frame) {
+	private void createStatusBar() {
 		JPanel statusBarPanel = new JPanel();
 		statusBarPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
 		frame.getContentPane().add(statusBarPanel, BorderLayout.SOUTH);
