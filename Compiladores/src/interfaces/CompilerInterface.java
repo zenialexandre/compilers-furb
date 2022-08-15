@@ -1,23 +1,26 @@
 package interfaces;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Image;
-
+import java.awt.TextArea;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
-import java.awt.TextArea;
 import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 
 //@SuppressWarnings("deprecation")
-public class InterfaceCompilador {
+public class CompilerInterface {
 
 	private JFrame frame;
 	private JMenuBar toolsBar;
@@ -26,7 +29,7 @@ public class InterfaceCompilador {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InterfaceCompilador window = new InterfaceCompilador();
+					CompilerInterface window = new CompilerInterface();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -35,7 +38,7 @@ public class InterfaceCompilador {
 		});
 	}
 
-	public InterfaceCompilador() {
+	public CompilerInterface() {
 		initialize();
 	}
 
@@ -121,9 +124,14 @@ public class InterfaceCompilador {
 		frame.getContentPane().add(splitPane, BorderLayout.CENTER);
 	}
 
-	private TextArea createEditorArea() {
-		TextArea editorTextArea = new TextArea(20, 10);
-		return editorTextArea;
+	private JTextArea createEditorArea() {
+		JTextArea editorArea = new JTextArea();
+		JScrollPane scrollEditorPane = new JScrollPane(editorArea);
+		TextLineNumber textLineNumber = new TextLineNumber(editorArea);
+		editorArea.setPreferredSize(new Dimension(900, 300));
+		scrollEditorPane.setRowHeaderView(textLineNumber);
+		//TextArea editorTextArea = new TextArea(20, 10);
+		return editorArea;
 	}
 
 	private TextArea createMessageArea() {
