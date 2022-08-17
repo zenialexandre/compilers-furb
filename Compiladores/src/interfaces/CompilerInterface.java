@@ -6,6 +6,10 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.TextArea;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -18,12 +22,14 @@ import javax.swing.border.BevelBorder;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import java.io.IOException;
 
 //@SuppressWarnings("deprecation")
 public class CompilerInterface {
 
 	private JFrame frame;
 	private JMenuBar toolsBar;
+	private String execExplorer[] = { "explorer.exe" };
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -50,6 +56,7 @@ public class CompilerInterface {
 		this.createToolsBar();
 		this.createSplitPane();
 		this.createStatusBar();
+		this.keyboardActions();
 	}
 
 	private void createToolsBar() {
@@ -72,6 +79,7 @@ public class CompilerInterface {
 			Image openFileIcon = new ImageIcon(this.getClass().getResource("/open_file_icon.png")).getImage();
 			toolsBar.add(openFileItem);
 			openFileItem.setIcon(new ImageIcon(openFileIcon));
+			this.openClickAction(openFileItem);
 		}
 
 		{
@@ -116,7 +124,7 @@ public class CompilerInterface {
 			groupItem.setIcon(new ImageIcon(groupIcon));
 		}
 	}
-	
+
 	private void createSplitPane() {
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, this.createEditorArea(), this.createMessageArea());
 		splitPane.setOneTouchExpandable(true);
@@ -152,6 +160,35 @@ public class CompilerInterface {
 		statusBarLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		statusBarPanel.add(statusBarLabel);
 		statusBarPanel.setPreferredSize(new Dimension(900, 25));
+	}
+
+	private void openClickAction(JMenuItem openFileItem) {
+		openFileItem.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				fileExplorerAction();
+			}
+		});
+	}
+	
+	private void keyboardActions() {
+		frame.setFocusable(true);
+		frame.addKeyListener(new KeyAdapter() {	
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_O) {
+					fileExplorerAction();
+				}
+			}
+		});
+	}
+	
+	public void fileExplorerAction() {
+		try {
+			Runtime.getRuntime().exec(execExplorer);
+		} catch (IOException error) {
+			error.printStackTrace();
+		}
 	}
 
 	/*private String getCurrentDirectory() {
