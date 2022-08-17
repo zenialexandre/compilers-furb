@@ -220,14 +220,18 @@ public class CompilerInterface {
 		messageTextArea.setText("");
 	}
 	
+	private void clearEditorPanel() {
+		editorPanel.setText("");
+	}
+	
 	private void fillEditorPanel(File selectedFile) {
 		try {
-			editorPanel.setText("");
+			this.clearEditorPanel();
 			try (BufferedReader bufferReader = new BufferedReader(new FileReader(selectedFile))) {
 				String lines = bufferReader.readLine();
 				
 				while (lines != null) {
-					editorPanel.setText(editorPanel.getText() + "\n" + lines);
+					editorPanel.setText(editorPanel.getText() + lines + "\n");
 					lines = bufferReader.readLine();
 				}
 			}
