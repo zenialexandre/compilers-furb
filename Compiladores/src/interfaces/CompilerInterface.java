@@ -6,11 +6,18 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.TextArea;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
+import javax.swing.InputMap;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -22,6 +29,8 @@ import javax.swing.border.BevelBorder;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.swing.KeyStroke;
+
 import java.io.IOException;
 
 //@SuppressWarnings("deprecation")
@@ -56,7 +65,6 @@ public class CompilerInterface {
 		this.createToolsBar();
 		this.createSplitPane();
 		this.createStatusBar();
-		this.keyboardActions();
 	}
 
 	private void createToolsBar() {
@@ -80,6 +88,7 @@ public class CompilerInterface {
 			toolsBar.add(openFileItem);
 			openFileItem.setIcon(new ImageIcon(openFileIcon));
 			this.openClickAction(openFileItem);
+			this.openKeyboardAction();
 		}
 
 		{
@@ -171,16 +180,21 @@ public class CompilerInterface {
 		});
 	}
 	
-	private void keyboardActions() {
-		frame.setFocusable(true);
-		frame.addKeyListener(new KeyAdapter() {	
+	private void openKeyboardAction() {
+		InputMap inputMap = toolsBar.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+		String openKeyStroke = "control O";
+		
+		Action action = new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
-			public void keyReleased(KeyEvent e) {
-				if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_O) {
-					fileExplorerAction();
-				}
+			public void actionPerformed(ActionEvent e) {
+				fileExplorerAction();	
 			}
-		});
+		};
+		KeyStroke keyStroke = KeyStroke.getKeyStroke(openKeyStroke);
+		inputMap.put(keyStroke, openKeyStroke);
+		toolsBar.getActionMap().put(openKeyStroke, action);
 	}
 	
 	public void fileExplorerAction() {
