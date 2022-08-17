@@ -222,6 +222,7 @@ public class CompilerInterface {
 	
 	private void fillEditorPanel(File selectedFile) {
 		try {
+			editorPanel.setText("");
 			try (BufferedReader bufferReader = new BufferedReader(new FileReader(selectedFile))) {
 				String lines = bufferReader.readLine();
 				
