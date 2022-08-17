@@ -7,17 +7,15 @@ import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -26,11 +24,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 //@SuppressWarnings("deprecation")
@@ -38,8 +40,11 @@ public class CompilerInterface {
 
 	private JFrame frame;
 	private JMenuBar toolsBar;
-	private String execExplorer[] = { "explorer.exe" };
-
+	private JTextPane editorPanel;
+	private JTextArea editorArea;
+	private TextArea messageTextArea;
+	private JLabel statusBarLabel;
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -142,8 +147,8 @@ public class CompilerInterface {
 	}
 
 	private JScrollPane createEditorArea() {
-		JTextPane editorPanel = new JTextPane();
-		JTextArea editorArea = new JTextArea();
+		editorPanel = new JTextPane();
+		editorArea = new JTextArea();
 		editorPanel.add(editorArea);
 		TextLineNumber textLineNumber = new TextLineNumber(editorPanel, 1);
 		textLineNumber.setCurrentLineForeground(Color.CYAN);
@@ -156,7 +161,7 @@ public class CompilerInterface {
 	}
 
 	private TextArea createMessageArea() {
-		TextArea messageTextArea = new TextArea("Aqui iriam as mensagens", 5, 10);
+		messageTextArea = new TextArea("...", 5, 10);
 		messageTextArea.setEditable(false);
 		return messageTextArea;
 	}
@@ -165,7 +170,7 @@ public class CompilerInterface {
 		JPanel statusBarPanel = new JPanel();
 		statusBarPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
 		frame.getContentPane().add(statusBarPanel, BorderLayout.SOUTH);
-		JLabel statusBarLabel = new JLabel("aqui iria o caminho do file");
+		statusBarLabel = new JLabel("...");
 		statusBarLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		statusBarPanel.add(statusBarLabel);
 		statusBarPanel.setPreferredSize(new Dimension(900, 25));
@@ -175,7 +180,7 @@ public class CompilerInterface {
 		openFileItem.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				fileExplorerAction();
+				openFileExplorer();
 			}
 		});
 	}
@@ -189,7 +194,7 @@ public class CompilerInterface {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				fileExplorerAction();	
+				openFileExplorer();	
 			}
 		};
 		KeyStroke keyStroke = KeyStroke.getKeyStroke(openKeyStroke);
@@ -197,15 +202,40 @@ public class CompilerInterface {
 		toolsBar.getActionMap().put(openKeyStroke, action);
 	}
 	
-	public void fileExplorerAction() {
-		try {
-			Runtime.getRuntime().exec(execExplorer);
-		} catch (IOException error) {
-			error.printStackTrace();
+	public void openFileExplorer() {
+		JFileChooser fileChooser = new JFileChooser();
+		FileNameExtensionFilter filterTxt = new FileNameExtensionFilter("TEXT FILES","txt", "text");
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		fileChooser.setFileFilter(filterTxt);
+		
+		if (fileChooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
+			File selectedFile = fileChooser.getSelectedFile();
+			this.fillStatusBar(selectedFile);
+			this.fillEditorPanel(selectedFile);
+			this.clearMessageArea();
 		}
 	}
-
-	/*private String getCurrentDirectory() {
-		return this.getClass().getClassLoader().getResource("").getPath();
-	}*/
+	
+	private void clearMessageArea() {
+		messageTextArea.setText("");
+	}
+	
+	private void fillEditorPanel(File selectedFile) {
+		try {
+			try (BufferedReader bufferReader = new BufferedReader(new FileReader(selectedFile))) {
+				String lines = bufferReader.readLine();
+				
+				while (lines != null) {
+					editorPanel.setText(editorPanel.getText() + "\n" + lines);
+					lines = bufferReader.readLine();
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void fillStatusBar(File selectedFile) {
+		statusBarLabel.setText(selectedFile.getParentFile().getName() + "\\" + selectedFile.getName());
+	}
 }
