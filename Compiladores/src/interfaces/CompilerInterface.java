@@ -80,6 +80,7 @@ public class CompilerInterface {
 	}
 
 	private void createToolsBarItems() {
+		InputMap inputMap = toolsBar.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 		{
 			JMenuItem newFileItem = new JMenuItem("Novo [ctrl + r]");
 			Image newFileIcon = new ImageIcon(this.getClass().getResource("/new_file_icon.png")).getImage();
@@ -93,7 +94,7 @@ public class CompilerInterface {
 			toolsBar.add(openFileItem);
 			openFileItem.setIcon(new ImageIcon(openFileIcon));
 			this.openClickAction(openFileItem);
-			this.openKeyboardAction();
+			this.openKeyboardAction(inputMap);
 		}
 
 		{
@@ -136,6 +137,8 @@ public class CompilerInterface {
 			Image groupIcon = new ImageIcon(this.getClass().getResource("/group_icon.png")).getImage();
 			toolsBar.add(groupItem);
 			groupItem.setIcon(new ImageIcon(groupIcon));
+			this.groupClickAction(groupItem);
+			this.groupKeyboardAction(inputMap);
 		}
 	}
 
@@ -185,8 +188,16 @@ public class CompilerInterface {
 		});
 	}
 	
-	private void openKeyboardAction() {
-		InputMap inputMap = toolsBar.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+	private void groupClickAction(JMenuItem groupItem) {
+		groupItem.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				fillWithGroup();
+			}
+		});
+	}
+	
+	private void openKeyboardAction(InputMap inputMap) {
 		String openKeyStroke = "control O";
 		
 		Action action = new AbstractAction() {
@@ -202,6 +213,22 @@ public class CompilerInterface {
 		toolsBar.getActionMap().put(openKeyStroke, action);
 	}
 	
+	private void groupKeyboardAction(InputMap inputMap) {
+		String groupKeyStroke = "F1";
+		
+		Action action = new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fillWithGroup();
+			}
+		};
+		KeyStroke keyStroke = KeyStroke.getKeyStroke(groupKeyStroke);
+		inputMap.put(keyStroke, groupKeyStroke);
+		toolsBar.getActionMap().put(groupKeyStroke, action);
+	}
+	
 	public void openFileExplorer() {
 		JFileChooser fileChooser = new JFileChooser();
 		FileNameExtensionFilter filterTxt = new FileNameExtensionFilter("TEXT FILES","txt", "text");
@@ -214,6 +241,10 @@ public class CompilerInterface {
 			this.fillEditorPanel(selectedFile);
 			this.clearMessageArea();
 		}
+	}
+	
+	public void fillWithGroup() {
+		messageTextArea.setText("Alexandre Zeni e Joshua Patrick Alves");
 	}
 	
 	private void clearMessageArea() {
