@@ -1,2 +1,2 @@
 # Compiler
-By Alexandre Zeni & Joshua Patrick Alves
+By Alexandre Zeni & Joshua Patrick Loesch Alves
