@@ -244,7 +244,7 @@ public class CompilerInterface {
 	}
 	
 	public void fillWithGroup() {
-		messageTextArea.setText("Alexandre Zeni e Joshua Patrick Alves");
+		messageTextArea.setText("Alexandre Zeni e Joshua Patrick Loesch Alves");
 	}
 	
 	private void clearMessageArea() {
