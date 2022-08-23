@@ -31,9 +31,14 @@ import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 //@SuppressWarnings("deprecation")
 public class CompilerInterface {
@@ -44,6 +49,7 @@ public class CompilerInterface {
 	private JTextArea editorArea;
 	private TextArea messageTextArea;
 	private JLabel statusBarLabel;
+	private File currentFile;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -86,6 +92,8 @@ public class CompilerInterface {
 			Image newFileIcon = new ImageIcon(this.getClass().getResource("/new_file_icon.png")).getImage();
 			toolsBar.add(newFileItem);
 			newFileItem.setIcon(new ImageIcon(newFileIcon));
+			this.clearClickAction(newFileItem);
+			this.clearKeyboardAction(inputMap);
 		}
 
 		{
@@ -102,6 +110,8 @@ public class CompilerInterface {
 			Image saveIcon = new ImageIcon(this.getClass().getResource("/save_icon.png")).getImage();
 			toolsBar.add(saveFileItem);
 			saveFileItem.setIcon(new ImageIcon(saveIcon));
+			this.saveClickAction(saveFileItem);
+			this.saveKeyboardAction(inputMap);
 		}
 
 		{
@@ -130,6 +140,8 @@ public class CompilerInterface {
 			Image compíleIcon = new ImageIcon(this.getClass().getResource("/compile_icon.png")).getImage();
 			toolsBar.add(compileItem);
 			compileItem.setIcon(new ImageIcon(compíleIcon));
+			this.compileClickAction(compileItem);
+			this.compileKeyboardAction(inputMap);
 		}
 
 		{
@@ -153,11 +165,11 @@ public class CompilerInterface {
 		editorPanel = new JTextPane();
 		editorArea = new JTextArea();
 		editorPanel.add(editorArea);
-		TextLineNumber textLineNumber = new TextLineNumber(editorPanel, 1);
-		textLineNumber.setCurrentLineForeground(Color.CYAN);
+		//TextLineNumber textLineNumber = new TextLineNumber(editorPanel, 1);
+		//textLineNumber.setCurrentLineForeground(Color.CYAN);
 		JScrollPane scrollEditorPane = new JScrollPane(editorPanel);
 		scrollEditorPane.setPreferredSize(new Dimension(900, 300));
-		scrollEditorPane.setRowHeaderView(textLineNumber);
+		//scrollEditorPane.setRowHeaderView(textLineNumber);
 		scrollEditorPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollEditorPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		return scrollEditorPane;
@@ -188,6 +200,15 @@ public class CompilerInterface {
 		});
 	}
 	
+	private void clearClickAction(JMenuItem newFileItem) {
+		newFileItem.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				clearTextFields();
+			}
+		});
+	}
+	
 	private void groupClickAction(JMenuItem groupItem) {
 		groupItem.addMouseListener(new MouseAdapter() {
 			@Override
@@ -197,6 +218,30 @@ public class CompilerInterface {
 		});
 	}
 	
+	private void saveClickAction(JMenuItem saveFileItem) {
+		saveFileItem.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					saveFile();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	private void compileClickAction(JMenuItem compileItem) {
+		compileItem.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				compile();
+			}
+		}); 
+	}
+
 	private void openKeyboardAction(InputMap inputMap) {
 		String openKeyStroke = "control O";
 		
@@ -229,6 +274,55 @@ public class CompilerInterface {
 		toolsBar.getActionMap().put(groupKeyStroke, action);
 	}
 	
+	private void clearKeyboardAction (InputMap inputMap) {
+		String clearKeyStroke = "ctrl R";
+		Action action = new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				clearTextFields();
+			}
+		};
+		KeyStroke keyStroke = KeyStroke.getKeyStroke(clearKeyStroke);
+		inputMap.put(keyStroke, clearKeyStroke);
+		toolsBar.getActionMap().put(clearKeyStroke, action);
+	}
+	
+	private void saveKeyboardAction(InputMap inputMap) {
+		String saveKeyStroke = "ctrl S";
+		Action action = new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					saveFile();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		};
+		KeyStroke keyStroke = KeyStroke.getKeyStroke(saveKeyStroke);
+		inputMap.put(keyStroke, saveKeyStroke);
+		toolsBar.getActionMap().put(saveKeyStroke, action);
+	}
+	
+	private void compileKeyboardAction(InputMap inputMap) {
+		String compileKeyStroke = "F7";
+		Action action = new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				compile();
+			}
+		};
+		KeyStroke keyStroke = KeyStroke.getKeyStroke(compileKeyStroke);
+		inputMap.put(keyStroke, compileKeyStroke);
+		toolsBar.getActionMap().put(compileKeyStroke, action);
+	}
+	
 	public void openFileExplorer() {
 		JFileChooser fileChooser = new JFileChooser();
 		FileNameExtensionFilter filterTxt = new FileNameExtensionFilter("TEXT FILES","txt", "text");
@@ -236,11 +330,42 @@ public class CompilerInterface {
 		fileChooser.setFileFilter(filterTxt);
 		
 		if (fileChooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
-			File selectedFile = fileChooser.getSelectedFile();
-			this.fillStatusBar(selectedFile);
-			this.fillEditorPanel(selectedFile);
+			currentFile = fileChooser.getSelectedFile();
+			this.fillStatusBar(currentFile);
+			this.fillEditorPanel(currentFile);
 			this.clearMessageArea();
 		}
+	}
+	
+	public void saveFile() throws IOException {
+		if (currentFile == null) {
+			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+			FileNameExtensionFilter filterTxt = new FileNameExtensionFilter("TEXT FILES","txt", "text");
+			fileChooser.setFileFilter(filterTxt);
+			
+			if (fileChooser.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
+				currentFile = fileChooser.getSelectedFile();
+				if (!currentFile.getName().endsWith(".txt")) {
+					File renamedFile = new File(currentFile.getAbsolutePath() + ".txt");
+					currentFile = renamedFile;
+				}
+				this.fillStatusBar(currentFile);
+				this.clearMessageArea();
+				PrintWriter out = new PrintWriter(currentFile);
+				out.println(editorPanel.getText());
+				out.close();
+			};
+		} else {
+			this.clearMessageArea();
+			PrintWriter out = new PrintWriter(currentFile);
+			out.println(editorPanel.getText());
+			out.close();
+		}
+	}
+	
+	public void compile() {
+		this.messageTextArea.setText("compilação de programas ainda não foi implementada");
 	}
 	
 	public void fillWithGroup() {
@@ -273,5 +398,12 @@ public class CompilerInterface {
 	
 	private void fillStatusBar(File selectedFile) {
 		statusBarLabel.setText(selectedFile.getParentFile().getName() + "\\" + selectedFile.getName());
+	}
+	
+	private void clearTextFields() {
+		currentFile = null;
+		editorPanel.setText(null);
+		messageTextArea.setText(null);
+		statusBarLabel.setText(null);
 	}
 }
