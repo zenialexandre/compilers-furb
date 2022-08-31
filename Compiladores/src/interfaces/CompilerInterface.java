@@ -6,6 +6,12 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.TextArea;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -71,6 +77,7 @@ public class CompilerInterface {
 	private void initialize() {
 		frame = new JFrame("Compilador");
 		frame.setBounds(500, 500, 1100, 600);
+		frame.setMinimumSize(new Dimension(910, 600));
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.createToolsBar();
@@ -80,8 +87,8 @@ public class CompilerInterface {
 
 	private void createToolsBar() {
 		toolsBar = new JMenuBar();
+		toolsBar.setMinimumSize(new Dimension(900, 70));
 		frame.setJMenuBar(toolsBar);
-		toolsBar.setPreferredSize(new Dimension(900, 75));
 		this.createToolsBarItems();
 	}
 
@@ -119,6 +126,8 @@ public class CompilerInterface {
 			Image copyIcon = new ImageIcon(this.getClass().getResource("/copy_icon.png")).getImage();
 			toolsBar.add(copyItem);
 			copyItem.setIcon(new ImageIcon(copyIcon));
+			this.copyClickAction(copyItem);
+			this.copyKeyboardAction(inputMap);
 		}
 
 		{
@@ -126,6 +135,8 @@ public class CompilerInterface {
 			Image pasteIcon = new ImageIcon(this.getClass().getResource("/paste_icon.png")).getImage();
 			toolsBar.add(pasteItem);
 			pasteItem.setIcon(new ImageIcon(pasteIcon));
+			this.pasteClickAction(pasteItem);
+			
 		}
 
 		{
@@ -133,6 +144,7 @@ public class CompilerInterface {
 			Image cutIcon= new ImageIcon(this.getClass().getResource("/cut_icon.png")).getImage();
 			toolsBar.add(cutItem);
 			cutItem.setIcon(new ImageIcon(cutIcon));
+			this.cutClickAction(cutItem);
 		}
 
 		{
@@ -165,11 +177,11 @@ public class CompilerInterface {
 		editorPanel = new JTextPane();
 		editorArea = new JTextArea();
 		editorPanel.add(editorArea);
-		//TextLineNumber textLineNumber = new TextLineNumber(editorPanel, 1);
-		//textLineNumber.setCurrentLineForeground(Color.CYAN);
+		TextLineNumber textLineNumber = new TextLineNumber(editorPanel, 1);
+		textLineNumber.setCurrentLineForeground(Color.ORANGE);
 		JScrollPane scrollEditorPane = new JScrollPane(editorPanel);
 		scrollEditorPane.setPreferredSize(new Dimension(900, 300));
-		//scrollEditorPane.setRowHeaderView(textLineNumber);
+		scrollEditorPane.setRowHeaderView(textLineNumber);
 		scrollEditorPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollEditorPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		return scrollEditorPane;
@@ -184,11 +196,11 @@ public class CompilerInterface {
 	private void createStatusBar() {
 		JPanel statusBarPanel = new JPanel();
 		statusBarPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
-		frame.getContentPane().add(statusBarPanel, BorderLayout.SOUTH);
+		statusBarPanel.setMinimumSize(new Dimension(900, 25));
 		statusBarLabel = new JLabel("...");
 		statusBarLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		statusBarPanel.add(statusBarLabel);
-		statusBarPanel.setPreferredSize(new Dimension(900, 25));
+		frame.getContentPane().add(statusBarPanel, BorderLayout.SOUTH);
 	}
 
 	private void openClickAction(JMenuItem openFileItem) {
@@ -240,6 +252,36 @@ public class CompilerInterface {
 				compile();
 			}
 		}); 
+	}
+	
+	private void copyClickAction(JMenuItem copyItem) {
+		copyItem.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				copy();
+			}
+		});
+	}
+	
+	private void pasteClickAction(JMenuItem pasteItem) {
+		pasteItem.addMouseListener(new MouseAdapter() {
+		
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				paste();
+			}
+		});
+	}
+	
+	private void cutClickAction(JMenuItem cutItem) {
+		cutItem.addMouseListener(new MouseAdapter() {
+		
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cut();
+			}
+		});
 	}
 
 	private void openKeyboardAction(InputMap inputMap) {
@@ -323,7 +365,22 @@ public class CompilerInterface {
 		toolsBar.getActionMap().put(compileKeyStroke, action);
 	}
 	
-	public void openFileExplorer() {
+	private void copyKeyboardAction(InputMap inputMap) {
+		String copyKeyStroke = "CTRL + c";
+		Action action = new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				copy();
+			}
+		};
+		KeyStroke keyStroke = KeyStroke.getKeyStroke(copyKeyStroke);
+		inputMap.put(keyStroke, copyKeyStroke);
+		toolsBar.getActionMap().put(copyKeyStroke, action);
+	}
+	
+	private void openFileExplorer() {
 		JFileChooser fileChooser = new JFileChooser();
 		FileNameExtensionFilter filterTxt = new FileNameExtensionFilter("TEXT FILES","txt", "text");
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -337,7 +394,7 @@ public class CompilerInterface {
 		}
 	}
 	
-	public void saveFile() throws IOException {
+	private void saveFile() throws IOException {
 		if (currentFile == null) {
 			JFileChooser fileChooser = new JFileChooser();
 			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -364,11 +421,35 @@ public class CompilerInterface {
 		}
 	}
 	
-	public void compile() {
+	private void compile() {
 		this.messageTextArea.setText("compilação de programas ainda não foi implementada");
 	}
 	
-	public void fillWithGroup() {
+	private void copy() {
+		String selectedText = editorPanel.getSelectedText();
+		StringSelection strToClipboard = new StringSelection(selectedText);
+		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		clipboard.setContents(strToClipboard, null);
+	}
+	
+	private void paste() {
+		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		Transferable contents = clipboard.getContents(null);
+		if (contents != null && contents.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+			try {
+				editorPanel.setText(editorPanel.getText() + (String) contents.getTransferData(DataFlavor.stringFlavor));
+			} catch (UnsupportedFlavorException | IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void cut() {
+		copy();
+		editorPanel.replaceSelection("");
+	}
+	
+	private void fillWithGroup() {
 		messageTextArea.setText("Alexandre Zeni e Joshua Patrick Loesch Alves");
 	}
 	
