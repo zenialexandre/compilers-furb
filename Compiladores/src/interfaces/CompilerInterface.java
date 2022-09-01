@@ -437,11 +437,7 @@ public class CompilerInterface {
 		Transferable contents = clipboard.getContents(null);
 		if (contents != null && contents.isDataFlavorSupported(DataFlavor.stringFlavor)) {
 			try {
-				if (editorPanel.getSelectedText() != null) {
-					editorPanel.setText(editorPanel.getText().replace(editorPanel.getSelectedText(), (String) contents.getTransferData(DataFlavor.stringFlavor)));
-				} else {
-					editorPanel.replaceSelection((String) contents.getTransferData(DataFlavor.stringFlavor));
-				}
+				editorPanel.replaceSelection((String) contents.getTransferData(DataFlavor.stringFlavor));
 			} catch (UnsupportedFlavorException | IOException e) {
 				e.printStackTrace();
 			}
