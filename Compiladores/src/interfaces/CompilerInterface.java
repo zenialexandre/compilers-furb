@@ -429,7 +429,7 @@ public class CompilerInterface {
 		String selectedText = editorPanel.getSelectedText();
 		StringSelection strToClipboard = new StringSelection(selectedText);
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-		clipboard.setContents(strToClipboard, null);
+		if (selectedText != null) clipboard.setContents(strToClipboard, null);
 	}
 	
 	private void paste() {
@@ -437,7 +437,11 @@ public class CompilerInterface {
 		Transferable contents = clipboard.getContents(null);
 		if (contents != null && contents.isDataFlavorSupported(DataFlavor.stringFlavor)) {
 			try {
-				editorPanel.setText(editorPanel.getText() + (String) contents.getTransferData(DataFlavor.stringFlavor));
+				if (editorPanel.getSelectedText() != null) {
+					editorPanel.setText(editorPanel.getText().replace(editorPanel.getSelectedText(), (String) contents.getTransferData(DataFlavor.stringFlavor)));
+				} else {
+					editorPanel.replaceSelection((String) contents.getTransferData(DataFlavor.stringFlavor));
+				}
 			} catch (UnsupportedFlavorException | IOException e) {
 				e.printStackTrace();
 			}
@@ -483,8 +487,8 @@ public class CompilerInterface {
 	
 	private void clearTextFields() {
 		currentFile = null;
-		editorPanel.setText(null);
-		messageTextArea.setText(null);
+		this.clearEditorPanel();
+		this.clearMessageArea();
 		statusBarLabel.setText(null);
 	}
 }
