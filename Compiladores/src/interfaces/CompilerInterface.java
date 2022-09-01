@@ -76,7 +76,7 @@ public class CompilerInterface {
 
 	private void initialize() {
 		frame = new JFrame("Compilador");
-		frame.setBounds(500, 500, 1100, 600);
+		frame.setBounds(500, 500, 1150, 600);
 		frame.setMinimumSize(new Dimension(910, 600));
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
