@@ -31,6 +31,11 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import interfaces.lexic.LexicalError;
+import interfaces.lexic.Lexico;
+import interfaces.lexic.Token;
+
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
@@ -422,7 +427,17 @@ public class CompilerInterface {
 	}
 	
 	private void compile() {
-		this.messageTextArea.setText("compilação de programas ainda não foi implementada");
+		Lexico lexic = new Lexico();
+		lexic.setInput(editorPanel.getText());
+		
+		try {
+			Token token = null;
+			while ((token = lexic.nextToken()) != null) {
+				messageTextArea.setText(token.getLexeme());
+			}
+		} catch (LexicalError err) {
+			messageTextArea.setText(err.getMessage() + " em " + err.getPosition());
+		}
 	}
 	
 	private void copy() {
@@ -456,7 +471,7 @@ public class CompilerInterface {
 	private void clearMessageArea() {
 		messageTextArea.setText("");
 	}
-	
+
 	private void clearEditorPanel() {
 		editorPanel.setText("");
 	}
