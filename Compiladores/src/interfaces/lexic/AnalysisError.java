@@ -3,8 +3,7 @@ package interfaces.lexic;
 @SuppressWarnings("serial")
 public class AnalysisError extends Exception
 {
-
-	private int position;
+    private int position;
 
     public AnalysisError(String msg, int position)
     {
