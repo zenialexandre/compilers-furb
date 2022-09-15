@@ -1,6 +1,5 @@
 package interfaces.lexic;
 
-@SuppressWarnings("serial")
 public class AnalysisError extends Exception
 {
     private int position;
