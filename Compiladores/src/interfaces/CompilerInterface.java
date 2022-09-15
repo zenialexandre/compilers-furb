@@ -428,7 +428,6 @@ public class CompilerInterface {
 	
 	private void compile() {
 		Lexico lexic = new Lexico();
-		System.out.println(editorPanel.getText() == "\r\n[a\r\n]a string");
 		lexic.setInput(editorPanel.getText());
 		
 		try {
