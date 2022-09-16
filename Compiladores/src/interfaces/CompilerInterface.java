@@ -31,6 +31,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.Document;
 
 import interfaces.lexic.LexicalError;
 import interfaces.lexic.Lexico;
@@ -429,12 +430,15 @@ public class CompilerInterface {
 	private void compile() {
 		Lexico lexic = new Lexico();
 		lexic.setInput(editorPanel.getText());
-		
+		String msg = "linha         classe           lexema\n";
+
 		try {
 			Token token = null;
 			while ((token = lexic.nextToken()) != null) {
-				messageTextArea.setText(token.getLexeme());
+				msg += token.getLinePosition(editorPanel) + "              " + token.getIdClass() + "                     " + token.getLexeme() + "\n";
+				messageTextArea.setText(msg);
 			}
+			messageTextArea.setText(messageTextArea.getText() + "\nprograma compilado com sucesso");
 		} catch (LexicalError err) {
 			messageTextArea.setText(err.getMessage() + " em " + err.getPosition());
 		}
