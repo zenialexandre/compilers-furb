@@ -1,7 +1,11 @@
 package interfaces.lexic;
 
 import java.util.ArrayList;
+
+import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Utilities;
 
 public class Token {
 
@@ -52,18 +56,6 @@ public class Token {
 
     public final int getPosition() {
         return position;
-    }
-    
-    public final int getLinePosition(JTextPane editorPanel) {
-    	int lines = editorPanel.getDocument().getDefaultRootElement().getElementCount();
-    	int currentLinePosition = 0;
-    	
-    	/*for (int i = 0; i < lines; i++) {
-    		editorPanel.getDocument().getText(, i)
-    	}*/
-    	
-    	
-    	return currentLinePosition; 
     }
 
     public String toString() {

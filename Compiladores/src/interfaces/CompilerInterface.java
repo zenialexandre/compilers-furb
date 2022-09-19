@@ -31,7 +31,10 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
+import javax.swing.text.Element;
+import javax.swing.text.Utilities;
 
 import interfaces.lexic.LexicalError;
 import interfaces.lexic.Lexico;
@@ -255,7 +258,11 @@ public class CompilerInterface {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				compile();
+				try {
+					compile();
+				} catch (BadLocationException err) {
+					err.printStackTrace();
+				}
 			}
 		}); 
 	}
@@ -363,7 +370,11 @@ public class CompilerInterface {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				compile();
+				try {
+					compile();
+				} catch (BadLocationException err) {
+					err.printStackTrace();
+				}
 			}
 		};
 		KeyStroke keyStroke = KeyStroke.getKeyStroke(compileKeyStroke);
@@ -427,20 +438,26 @@ public class CompilerInterface {
 		}
 	}
 	
-	private void compile() {
+	private void compile() throws BadLocationException {
+		this.clearMessageArea();
 		Lexico lexic = new Lexico();
 		lexic.setInput(editorPanel.getText());
-		String msg = "linha         classe           lexema\n";
+		String msg = "linha" + String.format("%12s", "classe") + String.format("%35s", "lexema\n");
 
 		try {
 			Token token = null;
 			while ((token = lexic.nextToken()) != null) {
-				msg += token.getLinePosition(editorPanel) + "              " + token.getIdClass() + "                     " + token.getLexeme() + "\n";
+				msg += this.getLinePosition(token.getPosition()) + String.format("%25s", token.getIdClass()) + String.format("%28s", token.getLexeme()) + "\n";
 				messageTextArea.setText(msg);
 			}
 			messageTextArea.setText(messageTextArea.getText() + "\nprograma compilado com sucesso");
 		} catch (LexicalError err) {
-			messageTextArea.setText(err.getMessage() + " em " + err.getPosition());
+			if (("simbolo invalido").equalsIgnoreCase(err.getMessage())) {
+				messageTextArea.setText("Erro na linha " + this.getLinePosition(err.getPosition()) 
+										+ " - " + this.getTextAtLine(err.getPosition()) + " " + err.getMessage());
+			} else {
+				messageTextArea.setText("Erro na linha " + this.getLinePosition(err.getPosition()) + " - " + err.getMessage());
+			}
 		}
 	}
 	
@@ -505,5 +522,18 @@ public class CompilerInterface {
 		this.clearEditorPanel();
 		this.clearMessageArea();
 		statusBarLabel.setText(null);
+	}
+	
+	private int getLinePosition(int position) {
+		editorPanel.setCaretPosition(position);
+		Element root = editorPanel.getDocument().getDefaultRootElement();
+		return root.getElementIndex(editorPanel.getCaretPosition()) + 1;
+	}
+	
+	private String getTextAtLine(int position) throws BadLocationException {
+		editorPanel.setCaretPosition(position);
+		int start = Utilities.getWordStart(editorPanel, editorPanel.getCaretPosition());
+		int end = Utilities.getWordEnd(editorPanel, editorPanel.getCaretPosition());
+		return editorPanel.getText(start, end - start);
 	}
 }
