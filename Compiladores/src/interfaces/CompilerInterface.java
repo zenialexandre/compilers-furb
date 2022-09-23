@@ -46,14 +46,10 @@ import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 //@SuppressWarnings("deprecation")
 public class CompilerInterface {
@@ -417,7 +413,7 @@ public class CompilerInterface {
 			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			FileNameExtensionFilter filterTxt = new FileNameExtensionFilter("TEXT FILES","txt", "text");
 			fileChooser.setFileFilter(filterTxt);
-			
+
 			if (fileChooser.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
 				currentFile = fileChooser.getSelectedFile();
 				if (!currentFile.getName().endsWith(".txt")) {
@@ -447,7 +443,7 @@ public class CompilerInterface {
 		try {
 			Token token = null;
 			while ((token = lexic.nextToken()) != null) {
-				msg += this.getLinePosition(token.getPosition() / 2) + String.format("%25s", token.getIdClass()) + String.format("%28s", token.getLexeme()) + "\n";
+				msg += this.getLinePosition(token.getPosition()) + String.format("%25s", token.getIdClass()) + String.format("%28s", token.getLexeme()) + "\n";
 				messageTextArea.setText(msg);
 			}
 			messageTextArea.setText(messageTextArea.getText() + "\nprograma compilado com sucesso");
@@ -525,11 +521,6 @@ public class CompilerInterface {
 	}
 	
 	private int getLinePosition(int position) {
-		System.out.println("token.getPosition(): " + position);
-		System.out.println("editorPanel.getText().length(): " + this.getEditorText().length());
-		System.out.println("editorPanel.getDocument().getLength(): " + this.editorPanel.getDocument().getLength());
-		System.out.println("editorArea.getText().length(): " + this.editorArea.getText().length());
-		System.out.println("editorArea.getDocument().getLength(): " + this.editorArea.getDocument().getLength());
 		editorPanel.setCaretPosition(position);
 		Element root = editorPanel.getDocument().getDefaultRootElement();
 		return root.getElementIndex(editorPanel.getCaretPosition()) + 1;

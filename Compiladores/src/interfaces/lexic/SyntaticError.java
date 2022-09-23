@@ -1,5 +1,6 @@
 package interfaces.lexic;
 
+@SuppressWarnings("serial")
 public class SyntaticError extends AnalysisError
 {
     public SyntaticError(String msg, int position)
