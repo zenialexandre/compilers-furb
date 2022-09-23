@@ -447,7 +447,7 @@ public class CompilerInterface {
 		try {
 			Token token = null;
 			while ((token = lexic.nextToken()) != null) {
-				msg += this.getLinePosition(token.getPosition() / 2) + String.format("%25s", token.getId()) + String.format("%28s", token.getLexeme()) + "\n";
+				msg += this.getLinePosition(token.getPosition() / 2) + String.format("%25s", token.getIdClass()) + String.format("%28s", token.getLexeme()) + "\n";
 				messageTextArea.setText(msg);
 			}
 			messageTextArea.setText(messageTextArea.getText() + "\nprograma compilado com sucesso");
