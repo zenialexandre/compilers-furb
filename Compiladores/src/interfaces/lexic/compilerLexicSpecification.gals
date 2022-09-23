@@ -1,15 +1,12 @@
 #Options
 GenerateScanner = true
-GenerateParser = true
+GenerateParser = false
 Language = Java
 ScannerName = Lexico
-ParserName = Sintatico
-SemanticName = Semantico
 Package = interfaces.lexic
 ScannerCaseSensitive = true
 ScannerTable = Compact
-Input = Stream
-Parser = LL
+Input = String
 #RegularDefinitions
 dig: [0-9]
 digNoZero: [1-9]
@@ -17,8 +14,8 @@ mai: [A-Z]
 min: [a-z]
 letra: {mai} | {min}
 const: {dig}+ | {dig}* ({digNoZero}) d {digNoZero} {dig}*
-cml: # ([^\r\n])*
-cmb: \[ \r\n ([^\[\]])* \r\n \]
+cml: # ([^\n])*
+cmb: \[ \n ([^\[\]])* \n \]
 #Tokens
 id: {letra} (_ ({letra} | {dig})+ | {letra} | {dig})*
 intw: {dig}+ | {dig}* ({digNoZero})+ d {digNoZero} {dig}*
@@ -76,37 +73,4 @@ while = id: "while"
 :!{cmb}
 
 // ignorar caracteres de formatacao
-:![\s\n\t\r]
-#NonTerminals
-<program>
-<lst_instrucoes>
-<decl_const>
-<decl_var>
-<comando>
-<lst_id>
-<tipo>
-<valor>
-<expressao>
-<lst_comandos>
-<cmd_atrib>
-<cmd_input>
-<cmd_output>
-<cmd_select>
-<cmd_loop>
-<lst_expressoes>
-#Grammar
-<program>::= fun main "{" <lst_instrucoes> "}";
-<lst_instrucoes>::= <decl_const> | <decl_var> | <comando> | <decl_const> <lst_instrucoes> | <decl_var> <lst_instrucoes> | <comando> <lst_instrucoes>;
-<decl_const>::= val <lst_id> ":" <tipo> ";" | val <lst_id> ":" <tipo> "=" <valor> ";" | val <lst_id> "=" <valor> ";";
-<lst_id>::= id | id "," <lst_id>;
-<tipo>::= int | float | char | string | boolean;
-<valor>::= intw | flt | chr | str | true | false;
-<decl_var>::= var <lst_id> ":" <tipo> ";" | var <lst_id> ":" <tipo> "=" <valor> ";" | var <lst_id> "=" <valor> ";";
-<comando>::= <cmd_atrib> | <cmd_input> | <cmd_output> | <cmd_select> | <cmd_loop> | break;
-<cmd_atrib>::= id "=" <expressao> ";";
-<cmd_input>::= readln "(" str "," <lst_id> ")" ";" | readln "(" <lst_id> ")" ";";
-<cmd_output>::= print "(" <lst_expressoes> ")" ";" | println "(" <lst_expressoes> ")" ";";
-<lst_expressoes>::= <expressao> | <expressao> "," <lst_expressoes>;
-<cmd_select>::= if "(" <expressao> ")" <lst_comandos> else <lst_comandos> end ";" | if "(" <expressao> ")" <lst_comandos> end ";";
-<lst_comandos>::= <comando> | <comando> <lst_comandos>;
-<cmd_loop>::= do <lst_comandos> while "(" <expressao> ")" end ";";
+:![\s\n\t]
