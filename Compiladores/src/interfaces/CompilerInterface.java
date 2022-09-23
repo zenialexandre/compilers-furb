@@ -427,13 +427,13 @@ public class CompilerInterface {
 				this.fillStatusBar(currentFile);
 				this.clearMessageArea();
 				PrintWriter out = new PrintWriter(currentFile);
-				out.println(editorPanel.getText());
+				out.println(getEditorText());
 				out.close();
 			};
 		} else {
 			this.clearMessageArea();
 			PrintWriter out = new PrintWriter(currentFile);
-			out.println(editorPanel.getText());
+			out.println(getEditorText());
 			out.close();
 		}
 	}
@@ -441,13 +441,13 @@ public class CompilerInterface {
 	private void compile() throws BadLocationException {
 		this.clearMessageArea();
 		Lexico lexic = new Lexico();
-		lexic.setInput(editorPanel.getText());
+		lexic.setInput(getEditorText());
 		String msg = "linha" + String.format("%12s", "classe") + String.format("%35s", "lexema\n");
 
 		try {
 			Token token = null;
 			while ((token = lexic.nextToken()) != null) {
-				msg += this.getLinePosition(token.getPosition()) + String.format("%25s", token.getIdClass()) + String.format("%28s", token.getLexeme()) + "\n";
+				msg += this.getLinePosition(token.getPosition() / 2) + String.format("%25s", token.getId()) + String.format("%28s", token.getLexeme()) + "\n";
 				messageTextArea.setText(msg);
 			}
 			messageTextArea.setText(messageTextArea.getText() + "\nprograma compilado com sucesso");
@@ -504,7 +504,7 @@ public class CompilerInterface {
 				String lines = bufferReader.readLine();
 				
 				while (lines != null) {
-					editorPanel.setText(editorPanel.getText() + lines + "\n");
+					editorPanel.setText(getEditorText() + lines + "\n");
 					lines = bufferReader.readLine();
 				}
 			}
@@ -525,6 +525,11 @@ public class CompilerInterface {
 	}
 	
 	private int getLinePosition(int position) {
+		System.out.println("token.getPosition(): " + position);
+		System.out.println("editorPanel.getText().length(): " + this.getEditorText().length());
+		System.out.println("editorPanel.getDocument().getLength(): " + this.editorPanel.getDocument().getLength());
+		System.out.println("editorArea.getText().length(): " + this.editorArea.getText().length());
+		System.out.println("editorArea.getDocument().getLength(): " + this.editorArea.getDocument().getLength());
 		editorPanel.setCaretPosition(position);
 		Element root = editorPanel.getDocument().getDefaultRootElement();
 		return root.getElementIndex(editorPanel.getCaretPosition()) + 1;
@@ -535,5 +540,9 @@ public class CompilerInterface {
 		int start = Utilities.getWordStart(editorPanel, editorPanel.getCaretPosition());
 		int end = Utilities.getWordEnd(editorPanel, editorPanel.getCaretPosition());
 		return editorPanel.getText(start, end - start);
+	}
+	
+	private String getEditorText() {
+		return this.editorPanel.getText().replace("\r\n", "\n");
 	}
 }

@@ -1,32 +1,33 @@
 package interfaces.lexic;
 
-public class Lexico implements Constants {
-    
-	private int position;
+public class Lexico implements Constants
+{
+    private int position;
     private String input;
 
-    public Lexico() {
+    public Lexico()
+    {
         this("");
     }
 
-    public Lexico(String input) {
+    public Lexico(String input)
+    {
         setInput(input);
     }
 
-    public void setInput(String input) {
+    public void setInput(String input)
+    {
         this.input = input;
         setPosition(0);
     }
 
-    public void setPosition(int pos) {
+    public void setPosition(int pos)
+    {
         position = pos;
     }
 
-    public String getInput() {
-    	return this.input;
-    }
-
-    public Token nextToken() throws LexicalError {
+    public Token nextToken() throws LexicalError
+    {
         if ( ! hasInput() )
             return null;
 
@@ -37,15 +38,18 @@ public class Lexico implements Constants {
         int endState = -1;
         int end = -1;
 
-        while (hasInput()) {
+        while (hasInput())
+        {
             lastState = state;
             state = nextState(nextChar(), state);
 
             if (state < 0)
                 break;
 
-            else {
-                if (tokenForState(state) >= 0) {
+            else
+            {
+                if (tokenForState(state) >= 0)
+                {
                     endState = state;
                     end = position;
                 }
@@ -60,18 +64,21 @@ public class Lexico implements Constants {
 
         if (token == 0)
             return nextToken();
-        else {
+        else
+        {
             String lexeme = input.substring(start, end);
             token = lookupToken(token, lexeme);
             return new Token(token, lexeme, start);
         }
     }
 
-    private int nextState(char c, int state) {
+    private int nextState(char c, int state)
+    {
         int start = SCANNER_TABLE_INDEXES[state];
         int end   = SCANNER_TABLE_INDEXES[state+1]-1;
 
-        while (start <= end) {
+        while (start <= end)
+        {
             int half = (start+end)/2;
 
             if (SCANNER_TABLE[half][0] == c)
@@ -81,21 +88,25 @@ public class Lexico implements Constants {
             else  //(SCANNER_TABLE[half][0] > c)
                 end = half-1;
         }
+
         return -1;
     }
 
-    private int tokenForState(int state) {
+    private int tokenForState(int state)
+    {
         if (state < 0 || state >= TOKEN_STATE.length)
             return -1;
 
         return TOKEN_STATE[state];
     }
 
-    public int lookupToken(int base, String key) {
+    public int lookupToken(int base, String key)
+    {
         int start = SPECIAL_CASES_INDEXES[base];
         int end   = SPECIAL_CASES_INDEXES[base+1]-1;
 
-        while (start <= end) {
+        while (start <= end)
+        {
             int half = (start+end)/2;
             int comp = SPECIAL_CASES_KEYS[half].compareTo(key);
 
@@ -106,14 +117,17 @@ public class Lexico implements Constants {
             else  //(comp > 0)
                 end = half-1;
         }
+
         return base;
     }
 
-    public boolean hasInput() {
+    private boolean hasInput()
+    {
         return position < input.length();
     }
 
-    public char nextChar() {
+    private char nextChar()
+    {
         if (hasInput())
             return input.charAt(position++);
         else
