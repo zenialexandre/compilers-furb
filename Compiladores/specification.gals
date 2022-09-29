@@ -1,0 +1,156 @@
+#Options
+GenerateScanner = true
+GenerateParser = true
+Language = Java
+ScannerName = Lexico
+ParserName = Sintatico
+SemanticName = Semantico
+Package = interfaces.lexic
+ScannerCaseSensitive = true
+ScannerTable = Compact
+Input = Stream
+Parser = LL
+#RegularDefinitions
+dig: [0-9]
+digNoZero: [1-9]
+mai: [A-Z]
+min: [a-z]
+letra: {mai} | {min}
+const: {dig}+ | {dig}* ({digNoZero}) d {digNoZero} {dig}*
+cml: # ([^\r\n])*
+cmb: \[ \n ([^\[\]])* \n \]
+#Tokens
+id: {letra} (_ ({letra} | {dig})+ | {letra} | {dig})*
+intw: {dig}+ | {dig}* ({digNoZero})+ d {digNoZero} {dig}*
+flt: {dig}* \. {const}
+chr: \\ (n | s | t)
+str: \" ([^\"\n\\])* \"
+
+boolean = id: "boolean"
+break = id: "break"
+char = id: "char"
+do = id: "do"
+else = id: "else"
+end = id: "end"
+false = id: "false"
+float = id: "float"
+fun = id: "fun"
+if = id: "if"
+int = id: "int"
+main = id: "main"
+print = id: "print"
+println = id: "println"
+readln = id: "readln"
+string = id: "string"
+true = id: "true"
+val = id: "val"
+var = id: "var"
+while = id: "while"
+
+// simbolos especiais
+":"
+","
+";"
+"="
+")"
+"("
+"{"
+"}"
+"=="
+"!="
+"<"
+">"
+"+"
+"-"
+"*"
+"/"
+"%"
+"&&"
+"||"
+"!"
+
+// ignorar comentarios
+:!{cml}
+:!{cmb}
+
+// ignorar caracteres de formatacao
+:![\s\n\t]
+#NonTerminals
+<program>
+<lst_instrucoes>
+<lst_instrucoes_>
+<decl_const>
+<decl_constvar>
+<decl_constvar_>
+<decl_var>
+<comando>
+<lst_id>
+<lst_id_>
+<tipo>
+<valor>
+<expressao>
+<lst_comandos>
+<lst_comandos_>
+<cmd_atrib>
+<cmd_input>
+<cmd_input_>
+<cmd_output>
+<cmd_select>
+<cmd_select_>
+<cmd_loop>
+<lst_expressoes>
+<lst_expressoes_>
+
+//-----
+
+<expressao_>
+<elemento>
+<relacional>
+<relacional_>
+<operador_relacional>
+<aritmetica>
+<aritmetica_>
+<termo>
+<termo_>
+<fator>
+#Grammar
+//equipe 11: Alexandre Zeni, Joshua Patrick Loesch Alves
+//NOTA: 10,0
+
+<program>::= fun main "{" <lst_instrucoes> "}";
+<lst_instrucoes> ::= <decl_const> <lst_instrucoes_> | <decl_var> <lst_instrucoes_> | <comando> <lst_instrucoes_>;
+<lst_instrucoes_> ::= <lst_instrucoes> | î;
+<decl_const> ::= val <lst_id> <decl_constvar>;
+<decl_constvar> ::= "=" <valor> ";" | ":" <tipo> <decl_constvar_> ";";
+<decl_constvar_> ::= î | "=" <valor>;
+<lst_id> ::= id <lst_id_>;
+<lst_id_> ::= î | "," <lst_id>;
+<tipo>::= int | float | char | string | boolean;
+<valor>::= intw | flt | chr | str | true | false;
+<decl_var>::= var <lst_id> <decl_constvar>;
+<comando>::= <cmd_atrib> | <cmd_input> | <cmd_output> | <cmd_select> | <cmd_loop> | break ";";
+<cmd_atrib>::= id "=" <expressao> ";";
+<cmd_input> ::= readln "(" <cmd_input_>;
+<cmd_input_> ::= str "," <lst_id> ")" ";" | <lst_id> ")" ";";
+<cmd_output>::= print "(" <lst_expressoes> ")" ";" | println "(" <lst_expressoes> ")" ";";
+<lst_expressoes> ::= <expressao> <lst_expressoes_>;
+<lst_expressoes_> ::= î | "," <lst_expressoes>;
+<cmd_select> ::= if "(" <expressao> ")" <lst_comandos> <cmd_select_>;
+<cmd_select_> ::= else <lst_comandos> end ";" |  end ";";
+<lst_comandos> ::= <comando> <lst_comandos_>;
+<lst_comandos_> ::= î | <lst_comandos>;
+<cmd_loop>::= do <lst_comandos> while "(" <expressao> ")" end ";";
+
+//--------------------------------
+
+<expressao> ::= <elemento> <expressao_> ;
+<expressao_> ::= î | "&&" <elemento> <expressao_> | "||" <elemento> <expressao_> ;
+<elemento> ::= <relacional> | true | false | "!" <elemento> ;
+<relacional> ::= <aritmetica> <relacional_> ;
+<relacional_> ::= î | <operador_relacional> <aritmetica> ;
+<operador_relacional> ::= "==" | "!=" | "<" | ">" ;
+<aritmetica> ::= <termo> <aritmetica_> ;
+<aritmetica_> ::= î | "+" <termo> <aritmetica_> | "-" <termo> <aritmetica_> ;
+<termo> ::= <fator> <termo_> ;
+<termo_> ::= î | "*" <fator> <termo_> | "/" <fator> <termo_> | "%" <fator> <termo_> ;
+<fator> ::= id | intw | flt | chr | str | "(" <expressao> ")" | "+" <fator> | "-" <fator> ;
