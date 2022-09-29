@@ -119,12 +119,12 @@ while = id: "while"
 
 <program>::= fun main "{" <lst_instrucoes> "}";
 <lst_instrucoes> ::= <decl_const> <lst_instrucoes_> | <decl_var> <lst_instrucoes_> | <comando> <lst_instrucoes_>;
-<lst_instrucoes_> ::= <lst_instrucoes> | î;
+<lst_instrucoes_> ::= <lst_instrucoes> | Ã®;
 <decl_const> ::= val <lst_id> <decl_constvar>;
 <decl_constvar> ::= "=" <valor> ";" | ":" <tipo> <decl_constvar_> ";";
-<decl_constvar_> ::= î | "=" <valor>;
+<decl_constvar_> ::= Ã® | "=" <valor>;
 <lst_id> ::= id <lst_id_>;
-<lst_id_> ::= î | "," <lst_id>;
+<lst_id_> ::= Ã® | "," <lst_id>;
 <tipo>::= int | float | char | string | boolean;
 <valor>::= intw | flt | chr | str | true | false;
 <decl_var>::= var <lst_id> <decl_constvar>;
@@ -134,23 +134,23 @@ while = id: "while"
 <cmd_input_> ::= str "," <lst_id> ")" ";" | <lst_id> ")" ";";
 <cmd_output>::= print "(" <lst_expressoes> ")" ";" | println "(" <lst_expressoes> ")" ";";
 <lst_expressoes> ::= <expressao> <lst_expressoes_>;
-<lst_expressoes_> ::= î | "," <lst_expressoes>;
+<lst_expressoes_> ::= Ã® | "," <lst_expressoes>;
 <cmd_select> ::= if "(" <expressao> ")" <lst_comandos> <cmd_select_>;
 <cmd_select_> ::= else <lst_comandos> end ";" |  end ";";
 <lst_comandos> ::= <comando> <lst_comandos_>;
-<lst_comandos_> ::= î | <lst_comandos>;
+<lst_comandos_> ::= Ã® | <lst_comandos>;
 <cmd_loop>::= do <lst_comandos> while "(" <expressao> ")" end ";";
 
 //--------------------------------
 
 <expressao> ::= <elemento> <expressao_> ;
-<expressao_> ::= î | "&&" <elemento> <expressao_> | "||" <elemento> <expressao_> ;
+<expressao_> ::= Ã® | "&&" <elemento> <expressao_> | "||" <elemento> <expressao_> ;
 <elemento> ::= <relacional> | true | false | "!" <elemento> ;
 <relacional> ::= <aritmetica> <relacional_> ;
-<relacional_> ::= î | <operador_relacional> <aritmetica> ;
+<relacional_> ::= Ã® | <operador_relacional> <aritmetica> ;
 <operador_relacional> ::= "==" | "!=" | "<" | ">" ;
 <aritmetica> ::= <termo> <aritmetica_> ;
-<aritmetica_> ::= î | "+" <termo> <aritmetica_> | "-" <termo> <aritmetica_> ;
+<aritmetica_> ::= Ã® | "+" <termo> <aritmetica_> | "-" <termo> <aritmetica_> ;
 <termo> ::= <fator> <termo_> ;
-<termo_> ::= î | "*" <fator> <termo_> | "/" <fator> <termo_> | "%" <fator> <termo_> ;
+<termo_> ::= Ã® | "*" <fator> <termo_> | "/" <fator> <termo_> | "%" <fator> <termo_> ;
 <fator> ::= id | intw | flt | chr | str | "(" <expressao> ")" | "+" <fator> | "-" <fator> ;
