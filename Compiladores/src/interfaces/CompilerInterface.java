@@ -457,14 +457,11 @@ public class CompilerInterface {
 				messageTextArea.setText("Erro na linha " + this.getLinePosition(err.getPosition()) + " - " + err.getMessage());
 			}
 		} catch (SyntaticError err) {
-			messageTextArea.setText("Erro na linha " + this.getLinePosition(err.getPosition()) + " - encontrado " + this.getTextAtLine(err.getPosition()) + " - " + err.getMessage());
+			messageTextArea.setText("Erro na linha " + this.getLinePosition(err.getPosition()) 
+			+ " - encontrado " + this.getTextAtLine(err.getPosition()) + " - " + err.getMessage());
 		} catch (SemanticError err) {
 			// Trata erros semanticos, n tem ainda :/
 		}
-		
-		// mensagem: programa compilado com sucesso
-		// so essa mensagem se der certo
-		
 		
 		/*String msg = "linha" + String.format("%12s", "classe") + String.format("%35s", "lexema\n");
 

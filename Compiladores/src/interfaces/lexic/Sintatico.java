@@ -1,15 +1,53 @@
 package interfaces.lexic;
 
+import java.util.Map;
 import java.util.Stack;
 
 @SuppressWarnings("serial")
-public class Sintatico implements Constants
+public class Sintatico implements Constants, ParserConstants
 {
     private Stack stack = new Stack();
     private Token currentToken;
     private Token previousToken;
     private Lexico scanner;
     private Semantico semanticAnalyser;
+    
+    /*public Map<String, String> syntaticExpressions = Map.of(
+    			"<program>", 0,
+    			"<lst_instrucoes>", 1,
+    			"<lst_instrucoes_>", 2,
+    			"<decl_const>", 3,
+    			"<decl_constvar>", 4,
+    		    "<decl_constvar_>", 5,
+    		    "<decl_var>", 6,
+    		    "<comando>", 7,
+    		    "<lst_id>", 8,
+    		    "<lst_id_>", 9,
+    		    "<tipo>", 10,
+    		    "<valor>", 11,
+    		    "<expressao>", 12,
+    		    "<lst_comandos>", 13,
+    		    "<lst_comandos_>", 14,
+    		    "<cmd_atrib>", 15,
+    		    "<cmd_input>", 16,
+    		    "<cmd_input_>", 17,
+    		    "<cmd_output>", 18,
+    		    "<cmd_select>", 19,
+    		    "<cmd_select_>", 20,
+    		    "<cmd_loop>", 21,
+    		    "<lst_expressoes>", 22,
+    		    "<lst_expressoes_>", 23,
+    		    "<expressao_>", 24,
+    		    "<elemento>", 25,
+    		    "<relacional>", 26,
+    		    "<relacional_>", 27,
+    		    "<operador_relacional>", 28,
+    		    "<aritmetica>", 29,
+    		    "<aritmetica_>", 30,
+    		    "<termo>", 31,
+    		    "<termo_>", 32,
+    		    "<fator>", 33
+    		);*/
 
     private static final boolean isTerminal(int x)
     {
@@ -106,5 +144,23 @@ public class Sintatico implements Constants
 
         while ( ! step() )
             ;
+    }
+    
+  public String getMsgFromParserTable(int tableLine) {
+    	int[][] parserConstTable = ParserConstants.PARSER_TABLE;
+    	String finalMsg = "";
+    	
+    	for (int i = 0; i < parserConstTable.length; i++) {
+    		for (int j = 0; j < parserConstTable[0].length; j++) {
+    			if (i == 0) {
+    				if (parserConstTable[i][j] > 0) {
+    					finalMsg += parserConstTable[i][j];
+    				}
+    			}
+    		}
+    	}
+    	
+    	
+    	return finalMsg;
     }
 }

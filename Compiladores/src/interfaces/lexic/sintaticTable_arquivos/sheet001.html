@@ -1,0 +1,2321 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:x="urn:schemas-microsoft-com:office:excel"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Excel.Sheet>
+<meta name=Generator content="Microsoft Excel 15">
+<link id=Main-File rel=Main-File href="../sintaticTable.html">
+<link rel=File-List href=filelist.xml>
+<title>Tabela de Análise LL(1)</title>
+<link rel=Stylesheet href=stylesheet.css>
+<style>
+<!--table
+	{mso-displayed-decimal-separator:"\,";
+	mso-displayed-thousand-separator:"\.";}
+@page
+	{margin:.98in .79in .98in .79in;
+	mso-header-margin:.49in;
+	mso-footer-margin:.49in;}
+-->
+</style>
+<![if !supportTabStrip]><script language="JavaScript">
+<!--
+function fnUpdateTabs()
+ {
+  if (parent.window.g_iIEVer>=4) {
+   if (parent.document.readyState=="complete"
+    && parent.frames['frTabs'].document.readyState=="complete")
+   parent.fnSetActiveSheet(0);
+  else
+   window.setTimeout("fnUpdateTabs();",150);
+ }
+}
+
+if (window.name!="frSheet")
+ window.location.replace("../sintaticTable.html");
+else
+ fnUpdateTabs();
+//-->
+</script>
+<![endif]>
+</head>
+
+<body link="#0563C1" vlink="#954F72">
+
+<table border=0 cellpadding=0 cellspacing=0 width=1770 style='border-collapse:
+ collapse;table-layout:fixed;width:1328pt'>
+ <col width=145 style='mso-width-source:userset;mso-width-alt:5148;width:109pt'>
+ <col width=256 style='mso-width-source:userset;mso-width-alt:9102;width:192pt'>
+ <col width=22 style='mso-width-source:userset;mso-width-alt:768;width:16pt'>
+ <col width=34 style='mso-width-source:userset;mso-width-alt:1194;width:25pt'>
+ <col width=22 style='mso-width-source:userset;mso-width-alt:768;width:16pt'>
+ <col width=26 style='mso-width-source:userset;mso-width-alt:938;width:20pt'>
+ <col width=22 style='mso-width-source:userset;mso-width-alt:796;width:17pt'>
+ <col width=57 style='mso-width-source:userset;mso-width-alt:2019;width:43pt'>
+ <col width=42 style='mso-width-source:userset;mso-width-alt:1479;width:31pt'>
+ <col width=34 style='mso-width-source:userset;mso-width-alt:1194;width:25pt'>
+ <col width=23 style='mso-width-source:userset;mso-width-alt:824;width:17pt'>
+ <col width=30 span=2 style='mso-width-source:userset;mso-width-alt:1080;
+ width:23pt'>
+ <col width=35 span=2 style='mso-width-source:userset;mso-width-alt:1251;
+ width:26pt'>
+ <col width=28 style='mso-width-source:userset;mso-width-alt:995;width:21pt'>
+ <col width=22 style='mso-width-source:userset;mso-width-alt:768;width:16pt'>
+ <col width=23 style='mso-width-source:userset;mso-width-alt:824;width:17pt'>
+ <col width=38 style='mso-width-source:userset;mso-width-alt:1336;width:28pt'>
+ <col width=36 style='mso-width-source:userset;mso-width-alt:1280;width:27pt'>
+ <col width=47 style='mso-width-source:userset;mso-width-alt:1678;width:35pt'>
+ <col width=46 style='mso-width-source:userset;mso-width-alt:1621;width:34pt'>
+ <col width=41 style='mso-width-source:userset;mso-width-alt:1450;width:31pt'>
+ <col width=32 style='mso-width-source:userset;mso-width-alt:1137;width:24pt'>
+ <col width=25 style='mso-width-source:userset;mso-width-alt:881;width:19pt'>
+ <col width=26 style='mso-width-source:userset;mso-width-alt:938;width:20pt'>
+ <col width=39 style='mso-width-source:userset;mso-width-alt:1393;width:29pt'>
+ <col width=24 span=3 style='mso-width-source:userset;mso-width-alt:853;
+ width:18pt'>
+ <col width=27 style='mso-width-source:userset;mso-width-alt:967;width:20pt'>
+ <col width=25 span=4 style='mso-width-source:userset;mso-width-alt:881;
+ width:19pt'>
+ <col width=34 style='mso-width-source:userset;mso-width-alt:1223;width:26pt'>
+ <col width=32 style='mso-width-source:userset;mso-width-alt:1137;width:24pt'>
+ <col width=27 span=3 style='mso-width-source:userset;mso-width-alt:967;
+ width:20pt'>
+ <col width=25 style='mso-width-source:userset;mso-width-alt:881;width:19pt'>
+ <col width=27 style='mso-width-source:userset;mso-width-alt:967;width:20pt'>
+ <col width=26 style='mso-width-source:userset;mso-width-alt:938;width:20pt'>
+ <col width=30 style='mso-width-source:userset;mso-width-alt:1080;width:23pt'>
+ <col width=41 style='mso-width-source:userset;mso-width-alt:1450;width:31pt'>
+ <col width=34 style='mso-width-source:userset;mso-width-alt:1223;width:26pt'>
+ <col width=25 style='mso-width-source:userset;mso-width-alt:881;width:19pt'>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl65 width=145 style='height:14.4pt;width:109pt'>&nbsp;</td>
+  <td class=xl65 width=256 style='border-left:none;width:192pt'>$</td>
+  <td class=xl66 width=22 style='border-left:none;width:16pt'>id</td>
+  <td class=xl66 width=34 style='border-left:none;width:25pt'>intw</td>
+  <td class=xl66 width=22 style='border-left:none;width:16pt'>flt</td>
+  <td class=xl66 width=26 style='border-left:none;width:20pt'>chr</td>
+  <td class=xl66 width=22 style='border-left:none;width:17pt'>str</td>
+  <td class=xl66 width=57 style='border-left:none;width:43pt'>boolean</td>
+  <td class=xl66 width=42 style='border-left:none;width:31pt'>break</td>
+  <td class=xl66 width=34 style='border-left:none;width:25pt'>char</td>
+  <td class=xl66 width=23 style='border-left:none;width:17pt'>do</td>
+  <td class=xl66 width=30 style='border-left:none;width:23pt'>else</td>
+  <td class=xl66 width=30 style='border-left:none;width:23pt'>end</td>
+  <td class=xl66 width=35 style='border-left:none;width:26pt'>false</td>
+  <td class=xl66 width=35 style='border-left:none;width:26pt'>float</td>
+  <td class=xl66 width=28 style='border-left:none;width:21pt'>fun</td>
+  <td class=xl66 width=22 style='border-left:none;width:16pt'>if</td>
+  <td class=xl66 width=23 style='border-left:none;width:17pt'>int</td>
+  <td class=xl66 width=38 style='border-left:none;width:28pt'>main</td>
+  <td class=xl66 width=36 style='border-left:none;width:27pt'>print</td>
+  <td class=xl66 width=47 style='border-left:none;width:35pt'>println</td>
+  <td class=xl66 width=46 style='border-left:none;width:34pt'>readln</td>
+  <td class=xl66 width=41 style='border-left:none;width:31pt'>string</td>
+  <td class=xl66 width=32 style='border-left:none;width:24pt'>true</td>
+  <td class=xl66 width=25 style='border-left:none;width:19pt'>val</td>
+  <td class=xl66 width=26 style='border-left:none;width:20pt'>var</td>
+  <td class=xl66 width=39 style='border-left:none;width:29pt'>while</td>
+  <td class=xl66 width=24 style='border-left:none;width:18pt'>&quot;:&quot;</td>
+  <td class=xl66 width=24 style='border-left:none;width:18pt'>&quot;,&quot;</td>
+  <td class=xl66 width=24 style='border-left:none;width:18pt'>&quot;;&quot;</td>
+  <td class=xl66 width=27 style='border-left:none;width:20pt'>&quot;=&quot;</td>
+  <td class=xl66 width=25 style='border-left:none;width:19pt'>&quot;)&quot;</td>
+  <td class=xl66 width=25 style='border-left:none;width:19pt'>&quot;(&quot;</td>
+  <td class=xl66 width=25 style='border-left:none;width:19pt'>&quot;{&quot;</td>
+  <td class=xl66 width=25 style='border-left:none;width:19pt'>&quot;}&quot;</td>
+  <td class=xl66 width=34 style='border-left:none;width:26pt'>&quot;==&quot;</td>
+  <td class=xl66 width=32 style='border-left:none;width:24pt'>&quot;!=&quot;</td>
+  <td class=xl66 width=27 style='border-left:none;width:20pt'>&quot;&lt;&quot;</td>
+  <td class=xl66 width=27 style='border-left:none;width:20pt'>&quot;&gt;&quot;</td>
+  <td class=xl66 width=27 style='border-left:none;width:20pt'>&quot;+&quot;</td>
+  <td class=xl66 width=25 style='border-left:none;width:19pt'>&quot;-&quot;</td>
+  <td class=xl66 width=27 style='border-left:none;width:20pt'>&quot;*&quot;</td>
+  <td class=xl66 width=26 style='border-left:none;width:20pt'>&quot;/&quot;</td>
+  <td class=xl66 width=30 style='border-left:none;width:23pt'>&quot;%&quot;</td>
+  <td class=xl66 width=41 style='border-left:none;width:31pt'>&quot;&amp;&amp;&quot;</td>
+  <td class=xl66 width=34 style='border-left:none;width:26pt'>&quot;||&quot;</td>
+  <td class=xl66 width=25 style='border-left:none;width:19pt'>&quot;!&quot;</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;program&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>0</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;lst_instrucoes&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>3</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>3</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>3</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>3</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>3</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>3</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>3</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>1</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>2</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;lst_instrucoes_&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>4</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>4</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>4</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>4</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>4</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>4</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>4</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>4</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>4</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>5</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;decl_const&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>6</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;decl_constvar&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>8</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>7</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;decl_constvar_&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>9</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>10</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;decl_var&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>25</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;comando&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>26</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>31</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>30</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>29</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>28</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>28</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>27</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;lst_id&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>11</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;lst_id_&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>12</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>13</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>12</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>12</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;tipo&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>18</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>16</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>15</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>14</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>17</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;valor&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>19</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>20</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>21</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>22</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>24</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>23</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;expressao&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>48</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>48</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>48</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>48</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>48</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>48</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>48</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>48</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>48</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>48</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>48</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;lst_comandos&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>44</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>44</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>44</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>44</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>44</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>44</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>44</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;lst_comandos_&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>46</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>46</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>46</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>45</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>45</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>46</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>46</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>46</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>46</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>45</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;cmd_atrib&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>32</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;cmd_input&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>33</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;cmd_input_&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>35</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>34</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;cmd_output&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>36</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>37</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;cmd_select&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>41</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;cmd_select_&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>42</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>43</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;cmd_loop&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>47</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;lst_expressoes&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>38</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>38</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>38</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>38</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>38</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>38</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>38</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>38</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>38</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>38</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>38</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;lst_expressoes_&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>40</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>39</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;expressao_&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>49</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>49</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>49</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>50</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>51</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;elemento&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>52</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>52</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>52</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>52</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>52</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>54</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>53</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>52</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>52</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>52</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>55</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;relacional&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>56</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>56</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>56</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>56</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>56</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>56</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>56</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>56</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;relacional_&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>57</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>57</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>57</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>58</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>58</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>58</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>58</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>57</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>57</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;operador_relacional&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>59</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>60</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>61</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>62</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;aritmetica&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>63</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>63</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>63</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>63</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>63</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>63</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>63</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>63</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;aritmetica_&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>64</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>64</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>64</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>64</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>64</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>64</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>64</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>65</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>66</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>64</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>64</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;termo&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>67</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>67</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>67</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>67</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>67</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>67</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>67</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>67</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;termo_&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>68</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>68</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>68</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>68</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>68</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>68</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>68</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>68</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>68</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>69</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>70</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>71</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>68</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>68</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl66 style='height:14.4pt;border-top:none'>&lt;fator&gt;</td>
+  <td class=xl67 width=256 style='border-top:none;border-left:none;width:192pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>72</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>73</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>74</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>75</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:17pt'>76</td>
+  <td class=xl67 width=57 style='border-top:none;border-left:none;width:43pt'>-</td>
+  <td class=xl67 width=42 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:25pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=35 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=28 style='border-top:none;border-left:none;width:21pt'>-</td>
+  <td class=xl67 width=22 style='border-top:none;border-left:none;width:16pt'>-</td>
+  <td class=xl67 width=23 style='border-top:none;border-left:none;width:17pt'>-</td>
+  <td class=xl67 width=38 style='border-top:none;border-left:none;width:28pt'>-</td>
+  <td class=xl67 width=36 style='border-top:none;border-left:none;width:27pt'>-</td>
+  <td class=xl67 width=47 style='border-top:none;border-left:none;width:35pt'>-</td>
+  <td class=xl67 width=46 style='border-top:none;border-left:none;width:34pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=39 style='border-top:none;border-left:none;width:29pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=24 style='border-top:none;border-left:none;width:18pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>77</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=32 style='border-top:none;border-left:none;width:24pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>78</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>79</td>
+  <td class=xl67 width=27 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=26 style='border-top:none;border-left:none;width:20pt'>-</td>
+  <td class=xl67 width=30 style='border-top:none;border-left:none;width:23pt'>-</td>
+  <td class=xl67 width=41 style='border-top:none;border-left:none;width:31pt'>-</td>
+  <td class=xl67 width=34 style='border-top:none;border-left:none;width:26pt'>-</td>
+  <td class=xl67 width=25 style='border-top:none;border-left:none;width:19pt'>-</td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 colspan=47 style='height:14.4pt;mso-ignore:colspan'></td>
+ </tr>
+ <tr height=38 style='height:28.8pt'>
+  <td height=38 class=xl68 style='height:28.8pt'>0&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;program&gt; ::= fun main
+  &quot;{&quot; &lt;lst_instrucoes&gt; &quot;}&quot;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=38 style='height:28.8pt'>
+  <td height=38 class=xl68 style='height:28.8pt'>1&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;lst_instrucoes&gt; ::=
+  &lt;decl_const&gt; &lt;lst_instrucoes_&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=38 style='height:28.8pt'>
+  <td height=38 class=xl68 style='height:28.8pt'>2&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;lst_instrucoes&gt; ::=
+  &lt;decl_var&gt; &lt;lst_instrucoes_&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=38 style='height:28.8pt'>
+  <td height=38 class=xl68 style='height:28.8pt'>3&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;lst_instrucoes&gt; ::=
+  &lt;comando&gt; &lt;lst_instrucoes_&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>4&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;lst_instrucoes_&gt; ::=
+  &lt;lst_instrucoes&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>5&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;lst_instrucoes_&gt; ::= î</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=38 style='height:28.8pt'>
+  <td height=38 class=xl68 style='height:28.8pt'>6&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;decl_const&gt; ::= val
+  &lt;lst_id&gt; &lt;decl_constvar&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>7&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;decl_constvar&gt; ::=
+  &quot;=&quot; &lt;valor&gt; &quot;;&quot;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=38 style='height:28.8pt'>
+  <td height=38 class=xl68 style='height:28.8pt'>8&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;decl_constvar&gt; ::=
+  &quot;:&quot; &lt;tipo&gt; &lt;decl_constvar_&gt; &quot;;&quot;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>9&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;decl_constvar_&gt; ::= î</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>10&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;decl_constvar_&gt; ::=
+  &quot;=&quot; &lt;valor&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>11&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;lst_id&gt; ::= id
+  &lt;lst_id_&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>12&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;lst_id_&gt; ::= î</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>13&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;lst_id_&gt; ::=
+  &quot;,&quot; &lt;lst_id&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>14&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;tipo&gt; ::= int</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>15&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;tipo&gt; ::= float</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>16&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;tipo&gt; ::= char</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>17&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;tipo&gt; ::= string</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>18&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;tipo&gt; ::= boolean</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>19&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;valor&gt; ::= intw</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>20&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;valor&gt; ::= flt</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>21&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;valor&gt; ::= chr</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>22&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;valor&gt; ::= str</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>23&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;valor&gt; ::= true</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>24&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;valor&gt; ::= false</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=38 style='height:28.8pt'>
+  <td height=38 class=xl68 style='height:28.8pt'>25&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;decl_var&gt; ::= var
+  &lt;lst_id&gt; &lt;decl_constvar&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>26&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;comando&gt; ::=
+  &lt;cmd_atrib&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>27&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;comando&gt; ::=
+  &lt;cmd_input&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>28&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;comando&gt; ::=
+  &lt;cmd_output&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>29&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;comando&gt; ::=
+  &lt;cmd_select&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>30&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;comando&gt; ::=
+  &lt;cmd_loop&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>31&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;comando&gt; ::= break
+  &quot;;&quot;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>32&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;cmd_atrib&gt; ::= id
+  &quot;=&quot; &lt;expressao&gt; &quot;;&quot;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>33&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;cmd_input&gt; ::= readln
+  &quot;(&quot; &lt;cmd_input_&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>34&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;cmd_input_&gt; ::= str
+  &quot;,&quot; &lt;lst_id&gt; &quot;)&quot; &quot;;&quot;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>35&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;cmd_input_&gt; ::=
+  &lt;lst_id&gt; &quot;)&quot; &quot;;&quot;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=38 style='height:28.8pt'>
+  <td height=38 class=xl68 style='height:28.8pt'>36&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;cmd_output&gt; ::= print
+  &quot;(&quot; &lt;lst_expressoes&gt; &quot;)&quot; &quot;;&quot;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=38 style='height:28.8pt'>
+  <td height=38 class=xl68 style='height:28.8pt'>37&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;cmd_output&gt; ::= println
+  &quot;(&quot; &lt;lst_expressoes&gt; &quot;)&quot; &quot;;&quot;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=38 style='height:28.8pt'>
+  <td height=38 class=xl68 style='height:28.8pt'>38&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;lst_expressoes&gt; ::=
+  &lt;expressao&gt; &lt;lst_expressoes_&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>39&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;lst_expressoes_&gt; ::= î</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=38 style='height:28.8pt'>
+  <td height=38 class=xl68 style='height:28.8pt'>40&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;lst_expressoes_&gt; ::=
+  &quot;,&quot; &lt;lst_expressoes&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=38 style='height:28.8pt'>
+  <td height=38 class=xl68 style='height:28.8pt'>41&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;cmd_select&gt; ::= if
+  &quot;(&quot; &lt;expressao&gt; &quot;)&quot; &lt;lst_comandos&gt;
+  &lt;cmd_select_&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=38 style='height:28.8pt'>
+  <td height=38 class=xl68 style='height:28.8pt'>42&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;cmd_select_&gt; ::= else
+  &lt;lst_comandos&gt; end &quot;;&quot;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>43&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;cmd_select_&gt; ::= end
+  &quot;;&quot;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=38 style='height:28.8pt'>
+  <td height=38 class=xl68 style='height:28.8pt'>44&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;lst_comandos&gt; ::=
+  &lt;comando&gt; &lt;lst_comandos_&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>45&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;lst_comandos_&gt; ::= î</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>46&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;lst_comandos_&gt; ::=
+  &lt;lst_comandos&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=38 style='height:28.8pt'>
+  <td height=38 class=xl68 style='height:28.8pt'>47&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;cmd_loop&gt; ::= do
+  &lt;lst_comandos&gt; while &quot;(&quot; &lt;expressao&gt; &quot;)&quot; end
+  &quot;;&quot;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=38 style='height:28.8pt'>
+  <td height=38 class=xl68 style='height:28.8pt'>48&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;expressao&gt; ::=
+  &lt;elemento&gt; &lt;expressao_&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>49&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;expressao_&gt; ::= î</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=38 style='height:28.8pt'>
+  <td height=38 class=xl68 style='height:28.8pt'>50&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;expressao_&gt; ::=
+  &quot;&amp;&amp;&quot; &lt;elemento&gt; &lt;expressao_&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=38 style='height:28.8pt'>
+  <td height=38 class=xl68 style='height:28.8pt'>51&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;expressao_&gt; ::=
+  &quot;||&quot; &lt;elemento&gt; &lt;expressao_&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>52&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;elemento&gt; ::=
+  &lt;relacional&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>53&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;elemento&gt; ::= true</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>54&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;elemento&gt; ::= false</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>55&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;elemento&gt; ::=
+  &quot;!&quot; &lt;elemento&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=38 style='height:28.8pt'>
+  <td height=38 class=xl68 style='height:28.8pt'>56&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;relacional&gt; ::=
+  &lt;aritmetica&gt; &lt;relacional_&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>57&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;relacional_&gt; ::= î</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=38 style='height:28.8pt'>
+  <td height=38 class=xl68 style='height:28.8pt'>58&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;relacional_&gt; ::=
+  &lt;operador_relacional&gt; &lt;aritmetica&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>59&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;operador_relacional&gt; ::=
+  &quot;==&quot;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>60&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;operador_relacional&gt; ::=
+  &quot;!=&quot;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>61&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;operador_relacional&gt; ::=
+  &quot;&lt;&quot;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>62&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;operador_relacional&gt; ::=
+  &quot;&gt;&quot;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>63&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;aritmetica&gt; ::=
+  &lt;termo&gt; &lt;aritmetica_&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>64&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;aritmetica_&gt; ::= î</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=38 style='height:28.8pt'>
+  <td height=38 class=xl68 style='height:28.8pt'>65&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;aritmetica_&gt; ::=
+  &quot;+&quot; &lt;termo&gt; &lt;aritmetica_&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=38 style='height:28.8pt'>
+  <td height=38 class=xl68 style='height:28.8pt'>66&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;aritmetica_&gt; ::=
+  &quot;-&quot; &lt;termo&gt; &lt;aritmetica_&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>67&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;termo&gt; ::= &lt;fator&gt;
+  &lt;termo_&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>68&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;termo_&gt; ::= î</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>69&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;termo_&gt; ::= &quot;*&quot;
+  &lt;fator&gt; &lt;termo_&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>70&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;termo_&gt; ::= &quot;/&quot;
+  &lt;fator&gt; &lt;termo_&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>71&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;termo_&gt; ::= &quot;%&quot;
+  &lt;fator&gt; &lt;termo_&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>72&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;fator&gt; ::= id</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>73&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;fator&gt; ::= intw</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>74&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;fator&gt; ::= flt</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>75&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;fator&gt; ::= chr</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>76&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;fator&gt; ::= str</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>77&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;fator&gt; ::= &quot;(&quot;
+  &lt;expressao&gt; &quot;)&quot;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>78&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;fator&gt; ::= &quot;+&quot;
+  &lt;fator&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=19 style='height:14.4pt'>
+  <td height=19 class=xl68 style='height:14.4pt'>79&nbsp;-&nbsp;</td>
+  <td class=xl69 width=256 style='width:192pt'>&lt;fator&gt; ::= &quot;-&quot;
+  &lt;fator&gt;</td>
+  <td colspan=45 style='mso-ignore:colspan'></td>
+ </tr>
+ <![if supportMisalignedColumns]>
+ <tr height=0 style='display:none'>
+  <td width=145 style='width:109pt'></td>
+  <td width=256 style='width:192pt'></td>
+  <td width=22 style='width:16pt'></td>
+  <td width=34 style='width:25pt'></td>
+  <td width=22 style='width:16pt'></td>
+  <td width=26 style='width:20pt'></td>
+  <td width=22 style='width:17pt'></td>
+  <td width=57 style='width:43pt'></td>
+  <td width=42 style='width:31pt'></td>
+  <td width=34 style='width:25pt'></td>
+  <td width=23 style='width:17pt'></td>
+  <td width=30 style='width:23pt'></td>
+  <td width=30 style='width:23pt'></td>
+  <td width=35 style='width:26pt'></td>
+  <td width=35 style='width:26pt'></td>
+  <td width=28 style='width:21pt'></td>
+  <td width=22 style='width:16pt'></td>
+  <td width=23 style='width:17pt'></td>
+  <td width=38 style='width:28pt'></td>
+  <td width=36 style='width:27pt'></td>
+  <td width=47 style='width:35pt'></td>
+  <td width=46 style='width:34pt'></td>
+  <td width=41 style='width:31pt'></td>
+  <td width=32 style='width:24pt'></td>
+  <td width=25 style='width:19pt'></td>
+  <td width=26 style='width:20pt'></td>
+  <td width=39 style='width:29pt'></td>
+  <td width=24 style='width:18pt'></td>
+  <td width=24 style='width:18pt'></td>
+  <td width=24 style='width:18pt'></td>
+  <td width=27 style='width:20pt'></td>
+  <td width=25 style='width:19pt'></td>
+  <td width=25 style='width:19pt'></td>
+  <td width=25 style='width:19pt'></td>
+  <td width=25 style='width:19pt'></td>
+  <td width=34 style='width:26pt'></td>
+  <td width=32 style='width:24pt'></td>
+  <td width=27 style='width:20pt'></td>
+  <td width=27 style='width:20pt'></td>
+  <td width=27 style='width:20pt'></td>
+  <td width=25 style='width:19pt'></td>
+  <td width=27 style='width:20pt'></td>
+  <td width=26 style='width:20pt'></td>
+  <td width=30 style='width:23pt'></td>
+  <td width=41 style='width:31pt'></td>
+  <td width=34 style='width:26pt'></td>
+  <td width=25 style='width:19pt'></td>
+ </tr>
+ <![endif]>
+</table>
+
+</body>
+
+</html>
