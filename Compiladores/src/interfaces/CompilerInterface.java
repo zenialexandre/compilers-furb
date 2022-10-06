@@ -38,6 +38,10 @@ import javax.swing.text.Utilities;
 
 import interfaces.lexic.LexicalError;
 import interfaces.lexic.Lexico;
+import interfaces.lexic.SemanticError;
+import interfaces.lexic.Semantico;
+import interfaces.lexic.Sintatico;
+import interfaces.lexic.SyntaticError;
 import interfaces.lexic.Token;
 
 import javax.swing.JSplitPane;
@@ -437,8 +441,32 @@ public class CompilerInterface {
 	private void compile() throws BadLocationException {
 		this.clearMessageArea();
 		Lexico lexic = new Lexico();
+		Sintatico syntatic = new Sintatico();
+		Semantico semantic = new Semantico();
 		lexic.setInput(getEditorText());
-		String msg = "linha" + String.format("%12s", "classe") + String.format("%35s", "lexema\n");
+		
+		try {
+			syntatic.parse(lexic, semantic);
+			messageTextArea.setText("programa compilado com sucesso");
+		} catch (LexicalError err) {
+			// Trata erros lexicos, conforme trab 2
+			if (("simbolo invalido").equalsIgnoreCase(err.getMessage())) {
+				messageTextArea.setText("Erro na linha " + this.getLinePosition(err.getPosition()) 
+										+ " - " + this.getTextAtLine(err.getPosition()) + " " + err.getMessage());
+			} else {
+				messageTextArea.setText("Erro na linha " + this.getLinePosition(err.getPosition()) + " - " + err.getMessage());
+			}
+		} catch (SyntaticError err) {
+			messageTextArea.setText("Erro na linha " + this.getLinePosition(err.getPosition()) + " - encontrado " + this.getTextAtLine(err.getPosition()) + " - " + err.getMessage());
+		} catch (SemanticError err) {
+			// Trata erros semanticos, n tem ainda :/
+		}
+		
+		// mensagem: programa compilado com sucesso
+		// so essa mensagem se der certo
+		
+		
+		/*String msg = "linha" + String.format("%12s", "classe") + String.format("%35s", "lexema\n");
 
 		try {
 			Token token = null;
@@ -454,7 +482,7 @@ public class CompilerInterface {
 			} else {
 				messageTextArea.setText("Erro na linha " + this.getLinePosition(err.getPosition()) + " - " + err.getMessage());
 			}
-		}
+		}*/
 	}
 	
 	private void copy() {

@@ -1,6 +1,6 @@
 package interfaces.lexic;
 
-public interface Constants extends ScannerConstants
+public interface Constants extends ScannerConstants, ParserConstants
 {
     int EPSILON  = 0;
     int DOLLAR   = 1;
@@ -50,7 +50,5 @@ public interface Constants extends ScannerConstants
     int t_TOKEN_44 = 44; //"&&"
     int t_TOKEN_45 = 45; //"||"
     int t_TOKEN_46 = 46; //"!"
-    int t_TOKEN_47 = 47; //"++"
-    int t_TOKEN_48 = 48; //"--"
 
 }
