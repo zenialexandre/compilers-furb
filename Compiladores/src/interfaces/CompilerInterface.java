@@ -38,6 +38,7 @@ import javax.swing.text.Utilities;
 
 import interfaces.lexic.LexicalError;
 import interfaces.lexic.Lexico;
+import interfaces.lexic.ParserConstants;
 import interfaces.lexic.SemanticError;
 import interfaces.lexic.Semantico;
 import interfaces.lexic.Sintatico;
@@ -54,9 +55,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.IntStream;
 
 //@SuppressWarnings("deprecation")
-public class CompilerInterface {
+public class CompilerInterface implements ParserConstants {
 
 	private JFrame frame;
 	private JMenuBar toolsBar;
@@ -440,6 +444,30 @@ public class CompilerInterface {
 	
 	private void compile() throws BadLocationException {
 		this.clearMessageArea();
+		ArrayList<String> tableLines = new ArrayList<>(Arrays.asList(
+				"0",
+				"1",
+				"2",
+				"3",
+				"4",
+				"5",
+				"6",
+				"7",
+				"8",
+				"9",
+				"10",
+				"11",
+				"13",
+				"14",
+				"15",
+				"16",
+				"17",
+				"18",
+				"19",
+				"20",
+				"21",
+				"28"));
+
 		Lexico lexic = new Lexico();
 		Sintatico syntatic = new Sintatico();
 		Semantico semantic = new Semantico();
@@ -449,7 +477,6 @@ public class CompilerInterface {
 			syntatic.parse(lexic, semantic);
 			messageTextArea.setText("programa compilado com sucesso");
 		} catch (LexicalError err) {
-			// Trata erros lexicos, conforme trab 2
 			if (("simbolo invalido").equalsIgnoreCase(err.getMessage())) {
 				messageTextArea.setText("Erro na linha " + this.getLinePosition(err.getPosition()) 
 										+ " - " + this.getTextAtLine(err.getPosition()) + " " + err.getMessage());
@@ -457,31 +484,19 @@ public class CompilerInterface {
 				messageTextArea.setText("Erro na linha " + this.getLinePosition(err.getPosition()) + " - " + err.getMessage());
 			}
 		} catch (SyntaticError err) {
-			messageTextArea.setText("Erro na linha " + this.getLinePosition(err.getPosition()) 
-			+ " - encontrado " + this.getTextAtLine(err.getPosition()) + " - " + err.getMessage());
+			if (tableLines.contains(err.getMessage())) {
+				int errTableLine = Integer.parseInt(err.getMessage());
+				messageTextArea.setText("Erro na linha " + this.getLinePosition(err.getPosition())
+				+ " - encontrado " + this.getTextAtLine(err.getPosition()) + " - " + "esperado " + this.getMsgFromParserTable(errTableLine));
+			} else {
+				messageTextArea.setText("Erro na linha " + this.getLinePosition(err.getPosition()) 
+				+ " - encontrado " + this.getTextAtLine(err.getPosition()) + " - " + err.getMessage());
+			}
 		} catch (SemanticError err) {
 			// Trata erros semanticos, n tem ainda :/
 		}
-		
-		/*String msg = "linha" + String.format("%12s", "classe") + String.format("%35s", "lexema\n");
-
-		try {
-			Token token = null;
-			while ((token = lexic.nextToken()) != null) {
-				msg += this.getLinePosition(token.getPosition()) + String.format("%25s", token.getIdClass()) + String.format("%28s", token.getLexeme()) + "\n";
-				messageTextArea.setText(msg);
-			}
-			messageTextArea.setText(messageTextArea.getText() + "\nprograma compilado com sucesso");
-		} catch (LexicalError err) {
-			if (("simbolo invalido").equalsIgnoreCase(err.getMessage())) {
-				messageTextArea.setText("Erro na linha " + this.getLinePosition(err.getPosition()) 
-										+ " - " + this.getTextAtLine(err.getPosition()) + " " + err.getMessage());
-			} else {
-				messageTextArea.setText("Erro na linha " + this.getLinePosition(err.getPosition()) + " - " + err.getMessage());
-			}
-		}*/
 	}
-	
+
 	private void copy() {
 		String selectedText = editorPanel.getSelectedText();
 		StringSelection strToClipboard = new StringSelection(selectedText);
@@ -561,4 +576,115 @@ public class CompilerInterface {
 	private String getEditorText() {
 		return this.editorPanel.getText().replace("\r\n", "\n");
 	}
+	
+	private String getMsgFromParserTable(int tableLine) {
+    	int[][] parserConstTable = ParserConstants.PARSER_TABLE;
+    	var wrapper = new Object() { String columnMsg = ""; };
+    	
+    	IntStream.range(tableLine, parserConstTable[tableLine].length).forEach(columnIndex -> {
+    		if (!(parserConstTable[tableLine][columnIndex] < 0)) {
+    			wrapper.columnMsg += " " + this.createSyntaticErrMsg(columnIndex) + " ";
+    		}
+    	});
+    	return wrapper.columnMsg;
+    }
+
+    private String createSyntaticErrMsg(int columnIndex) {
+    	String msg = "";
+    	
+    	if (columnIndex == 0) {
+			msg += "EOF";
+		} else if (columnIndex == 1) {
+			msg += "id";
+		} else if (columnIndex == 2) {
+			msg += "intw";
+		} else if (columnIndex == 3) {
+			msg += "flt"; 
+		} else if (columnIndex == 4) {
+			msg += "chr";
+		} else if (columnIndex == 5) {
+			msg += "str";
+		} else if (columnIndex == 6) {
+			msg += "boolean";
+		} else if (columnIndex == 7) {
+			msg += "break";
+		} else if (columnIndex == 8) {
+			msg += "char";
+		} else if (columnIndex == 9) {
+			msg += "do";
+		} else if (columnIndex == 10) {
+			msg += "else";
+		} else if (columnIndex == 11) {
+			msg += "end";
+		} else if (columnIndex == 12) {
+			msg += "false";
+		} else if (columnIndex == 13) {
+			msg += "float";
+		} else if (columnIndex == 14) {
+			msg += "fun";
+		} else if (columnIndex == 15) {
+			msg += "if";
+		} else if (columnIndex == 16) {
+			msg += "int";
+		} else if (columnIndex == 17) {
+			msg += "main";
+		} else if (columnIndex == 18) {
+			msg += "print";
+		} else if (columnIndex == 19) {
+			msg += "println";
+		} else if (columnIndex == 20) {
+			msg += "readln";
+		} else if (columnIndex == 21) {
+			msg += "string";
+		} else if (columnIndex == 22) {
+			msg += "true";
+		} else if (columnIndex == 23) {
+			msg += "val";
+		} else if (columnIndex == 24) {
+			msg += "var";
+		} else if (columnIndex == 25) {
+			msg += "while";
+		} else if (columnIndex == 26) {
+			msg += ":";
+		} else if (columnIndex == 27) {
+			msg += ",";
+		} else if (columnIndex == 28) {
+			msg += ";";
+		} else if (columnIndex == 29) {
+			msg += "=";
+		} else if (columnIndex == 30) {
+			msg += ")";
+		} else if (columnIndex == 31) {
+			msg += "(";
+		} else if (columnIndex == 32) {
+			msg += "}";
+		} else if (columnIndex == 33) {
+			msg += "{";
+		} else if (columnIndex == 34) {
+			msg += "==";
+		} else if (columnIndex == 35) {
+			msg += "!=";
+		} else if (columnIndex == 36) {
+			msg += "<";
+		} else if (columnIndex == 37) {
+			msg += ">";
+		} else if (columnIndex == 38) {
+			msg += "+";
+		} else if (columnIndex == 39) {
+			msg += "-";
+		} else if (columnIndex == 40) {
+			msg += "*";
+		} else if (columnIndex == 41) {
+			msg += "/";
+		} else if (columnIndex == 42) {
+			msg += "%";
+		} else if (columnIndex == 43) {
+			msg += "&&";
+		} else if (columnIndex == 44) {
+			msg += "||";
+		} else if (columnIndex == 45) {
+			msg += "!";
+		}
+    	return msg;
+    }
 }
