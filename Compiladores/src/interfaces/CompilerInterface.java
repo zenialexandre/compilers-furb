@@ -30,11 +30,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
 import javax.swing.text.Element;
 import javax.swing.text.Utilities;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.UndoManager;
 
 import interfaces.lexic.LexicalError;
 import interfaces.lexic.Lexico;
@@ -43,7 +47,6 @@ import interfaces.lexic.SemanticError;
 import interfaces.lexic.Semantico;
 import interfaces.lexic.Sintatico;
 import interfaces.lexic.SyntaticError;
-import interfaces.lexic.Token;
 
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
@@ -60,6 +63,7 @@ import java.util.Arrays;
 import java.util.stream.IntStream;
 
 //@SuppressWarnings("deprecation")
+@SuppressWarnings("serial")
 public class CompilerInterface implements ParserConstants {
 
 	private JFrame frame;
@@ -197,7 +201,21 @@ public class CompilerInterface implements ParserConstants {
 		scrollEditorPane.setRowHeaderView(textLineNumber);
 		scrollEditorPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollEditorPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		this.createUndoManager();
 		return scrollEditorPane;
+	}
+	
+	private void createUndoManager() {
+		final UndoManager undo = new UndoManager();
+		
+		editorPanel.getDocument().addUndoableEditListener(new UndoableEditListener() {
+			@Override
+			public void undoableEditHappened(UndoableEditEvent evt) {
+				undo.addEdit(evt.getEdit());
+			}
+		});
+		this.undoKeyboardAction(undo);
+		this.redoKeyboardAction(undo);
 	}
 
 	private TextArea createMessageArea() {
@@ -305,8 +323,6 @@ public class CompilerInterface implements ParserConstants {
 		String openKeyStroke = "control O";
 		
 		Action action = new AbstractAction() {
-			private static final long serialVersionUID = 1L;
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				openFileExplorer();	
@@ -321,8 +337,6 @@ public class CompilerInterface implements ParserConstants {
 		String groupKeyStroke = "F1";
 		
 		Action action = new AbstractAction() {
-			private static final long serialVersionUID = 1L;
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				fillWithGroup();
@@ -336,8 +350,6 @@ public class CompilerInterface implements ParserConstants {
 	private void clearKeyboardAction (InputMap inputMap) {
 		String clearKeyStroke = "ctrl R";
 		Action action = new AbstractAction() {
-			private static final long serialVersionUID = 1L;
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				clearTextFields();
@@ -351,8 +363,6 @@ public class CompilerInterface implements ParserConstants {
 	private void saveKeyboardAction(InputMap inputMap) {
 		String saveKeyStroke = "ctrl S";
 		Action action = new AbstractAction() {
-			private static final long serialVersionUID = 1L;
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -370,8 +380,6 @@ public class CompilerInterface implements ParserConstants {
 	private void compileKeyboardAction(InputMap inputMap) {
 		String compileKeyStroke = "F7";
 		Action action = new AbstractAction() {
-			private static final long serialVersionUID = 1L;
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -389,8 +397,6 @@ public class CompilerInterface implements ParserConstants {
 	private void copyKeyboardAction(InputMap inputMap) {
 		String copyKeyStroke = "CTRL + c";
 		Action action = new AbstractAction() {
-			private static final long serialVersionUID = 1L;
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				copy();
@@ -399,6 +405,38 @@ public class CompilerInterface implements ParserConstants {
 		KeyStroke keyStroke = KeyStroke.getKeyStroke(copyKeyStroke);
 		inputMap.put(keyStroke, copyKeyStroke);
 		toolsBar.getActionMap().put(copyKeyStroke, action);
+	}
+	
+	private void undoKeyboardAction(UndoManager undo) {		
+		editorPanel.getActionMap().put("Undo", new AbstractAction("Undo") {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if (undo.canUndo()) {
+						undo.undo();
+					}
+				} catch(CannotUndoException err) {
+					err.getMessage();
+				}
+			}
+		});
+		editorPanel.getInputMap().put(KeyStroke.getKeyStroke("control Z"), "Undo");
+	}
+	
+	private void redoKeyboardAction(UndoManager undo) {
+		editorPanel.getActionMap().put("Redo", new AbstractAction("Redo") {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				try {
+					if (undo.canRedo()) {
+						undo.redo();
+					}
+				} catch(CannotRedoException err) {
+					err.getMessage();
+				}
+			}
+		});
+		editorPanel.getInputMap().put(KeyStroke.getKeyStroke("control Y"), "Redo");
 	}
 	
 	private void openFileExplorer() {
@@ -525,14 +563,6 @@ public class CompilerInterface implements ParserConstants {
 		messageTextArea.setText("Alexandre Zeni e Joshua Patrick Loesch Alves");
 	}
 	
-	private void clearMessageArea() {
-		messageTextArea.setText("");
-	}
-
-	private void clearEditorPanel() {
-		editorPanel.setText("");
-	}
-	
 	private void fillEditorPanel(File selectedFile) {
 		try {
 			this.clearEditorPanel();
@@ -547,6 +577,14 @@ public class CompilerInterface implements ParserConstants {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void clearMessageArea() {
+		messageTextArea.setText("");
+	}
+
+	private void clearEditorPanel() {
+		editorPanel.setText("");
 	}
 	
 	private void fillStatusBar(File selectedFile) {
