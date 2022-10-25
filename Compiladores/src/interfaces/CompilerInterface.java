@@ -522,13 +522,19 @@ public class CompilerInterface implements ParserConstants {
 				messageTextArea.setText("Erro na linha " + this.getLinePosition(err.getPosition()) + " - " + err.getMessage());
 			}
 		} catch (SyntaticError err) {
+			String errLineTxt = "EOF";
+
+			if (!this.getTextAtLine(err.getPosition()).isBlank()) {
+				errLineTxt = this.getTextAtLine(err.getPosition());
+			}
+
 			if (tableLines.contains(err.getMessage())) {
 				int errTableLine = Integer.parseInt(err.getMessage());
 				messageTextArea.setText("Erro na linha " + this.getLinePosition(err.getPosition())
-				+ " - encontrado " + this.getTextAtLine(err.getPosition()) + " - " + "esperado " + this.getMsgFromParserTable(errTableLine));
+				+ " - encontrado " + errLineTxt + " - " + "esperado " + this.getMsgFromParserTable(errTableLine));
 			} else {
 				messageTextArea.setText("Erro na linha " + this.getLinePosition(err.getPosition()) 
-				+ " - encontrado " + this.getTextAtLine(err.getPosition()) + " - " + err.getMessage());
+				+ " - encontrado " + errLineTxt + " - " + err.getMessage());
 			}
 		} catch (SemanticError err) {
 			// Trata erros semanticos.
@@ -695,9 +701,9 @@ public class CompilerInterface implements ParserConstants {
 		} else if (columnIndex == 31) {
 			msg += "(";
 		} else if (columnIndex == 32) {
-			msg += "}";
-		} else if (columnIndex == 33) {
 			msg += "{";
+		} else if (columnIndex == 33) {
+			msg += "}";
 		} else if (columnIndex == 34) {
 			msg += "==";
 		} else if (columnIndex == 35) {
