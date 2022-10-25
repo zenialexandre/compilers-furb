@@ -531,7 +531,7 @@ public class CompilerInterface implements ParserConstants {
 				+ " - encontrado " + this.getTextAtLine(err.getPosition()) + " - " + err.getMessage());
 			}
 		} catch (SemanticError err) {
-			// Trata erros semanticos, n tem ainda :/
+			// Trata erros semanticos.
 		}
 	}
 

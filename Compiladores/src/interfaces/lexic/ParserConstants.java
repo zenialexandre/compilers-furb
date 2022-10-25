@@ -202,7 +202,7 @@ public interface ParserConstants
         "20", //"<cmd_select_> inv�lido",
         "21", //"<cmd_loop> inv�lido",
         "esperado expressao", //"<lst_expressoes> inv�lido",
-        "esperado expresaso", //"<lst_expressoes_> inv�lido",
+        "esperado expressao", //"<lst_expressoes_> inv�lido",
         "esperado expressao", //"<expressao_> inv�lido",
         "esperado expressao", //"<elemento> inv�lido",
         "esperado expressao", //"<relacional> inv�lido",
