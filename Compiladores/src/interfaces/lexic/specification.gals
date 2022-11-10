@@ -117,14 +117,14 @@ while = id: "while"
 //equipe 11: Alexandre Zeni, Joshua Patrick Loesch Alves
 //NOTA: 10,0
 
-<program>::= fun main "{" <lst_instrucoes> "}";
+<program>::= #15 fun main "{" <lst_instrucoes> "}" #16;
 <lst_instrucoes> ::= <decl_const> <lst_instrucoes_> | <decl_var> <lst_instrucoes_> | <comando> <lst_instrucoes_>;
-<lst_instrucoes_> ::= <lst_instrucoes> | Ã®;
+<lst_instrucoes_> ::= <lst_instrucoes> | î;
 <decl_const> ::= val <lst_id> <decl_constvar>;
 <decl_constvar> ::= "=" <valor> ";" | ":" <tipo> <decl_constvar_> ";";
-<decl_constvar_> ::= Ã® | "=" <valor>;
+<decl_constvar_> ::= î | "=" <valor>;
 <lst_id> ::= id <lst_id_>;
-<lst_id_> ::= Ã® | "," <lst_id>;
+<lst_id_> ::= î | "," <lst_id>;
 <tipo>::= int | float | char | string | boolean;
 <valor>::= intw | flt | chr | str | true | false;
 <decl_var>::= var <lst_id> <decl_constvar>;
@@ -132,25 +132,25 @@ while = id: "while"
 <cmd_atrib>::= id "=" <expressao> ";";
 <cmd_input> ::= readln "(" <cmd_input_>;
 <cmd_input_> ::= str "," <lst_id> ")" ";" | <lst_id> ")" ";";
-<cmd_output>::= print "(" <lst_expressoes> ")" ";" | println "(" <lst_expressoes> ")" ";";
-<lst_expressoes> ::= <expressao> <lst_expressoes_>;
-<lst_expressoes_> ::= Ã® | "," <lst_expressoes>;
+<cmd_output>::= print "(" <lst_expressoes> ")" ";" | println "(" <lst_expressoes> ")" #17 ";";
+<lst_expressoes> ::= <expressao> #14 <lst_expressoes_>;
+<lst_expressoes_> ::= î | "," <lst_expressoes>;
 <cmd_select> ::= if "(" <expressao> ")" <lst_comandos> <cmd_select_>;
 <cmd_select_> ::= else <lst_comandos> end ";" |  end ";";
 <lst_comandos> ::= <comando> <lst_comandos_>;
-<lst_comandos_> ::= Ã® | <lst_comandos>;
+<lst_comandos_> ::= î | <lst_comandos>;
 <cmd_loop>::= do <lst_comandos> while "(" <expressao> ")" end ";";
 
 //--------------------------------
 
 <expressao> ::= <elemento> <expressao_> ;
-<expressao_> ::= Ã® | "&&" <elemento> <expressao_> | "||" <elemento> <expressao_> ;
-<elemento> ::= <relacional> | true | false | "!" <elemento> ;
+<expressao_> ::= î | "&&" <elemento> #18 <expressao_> | "||" <elemento> #19 <expressao_> ;
+<elemento> ::= <relacional> | true #11 | false #12 | "!" <elemento> #13 ;
 <relacional> ::= <aritmetica> <relacional_> ;
-<relacional_> ::= Ã® | <operador_relacional> <aritmetica> ;
+<relacional_> ::= î | <operador_relacional> #9 <aritmetica> #10 ;
 <operador_relacional> ::= "==" | "!=" | "<" | ">" ;
 <aritmetica> ::= <termo> <aritmetica_> ;
-<aritmetica_> ::= Ã® | "+" <termo> <aritmetica_> | "-" <termo> <aritmetica_> ;
+<aritmetica_> ::= î | "+" <termo> #1 <aritmetica_> | "-" <termo> #2 <aritmetica_> ;
 <termo> ::= <fator> <termo_> ;
-<termo_> ::= Ã® | "*" <fator> <termo_> | "/" <fator> <termo_> | "%" <fator> <termo_> ;
-<fator> ::= id | intw | flt | chr | str | "(" <expressao> ")" | "+" <fator> | "-" <fator> ;
+<termo_> ::= î | "*" <fator> #3 <termo_> | "/" <fator> #4 <termo_> | "%" <fator> #20 <termo_> ;
+<fator> ::= id | intw #5 | flt #6 | chr #21 | str #22 | "(" <expressao> ")" | "+" <fator> #7 | "-" <fator> #8 ;
