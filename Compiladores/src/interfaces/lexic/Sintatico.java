@@ -15,6 +15,16 @@ public class Sintatico implements Constants
     {
         return x < FIRST_NON_TERMINAL;
     }
+    
+    public String getCurrentToken() {
+    	String msg = "";
+    	if ("$".equalsIgnoreCase(this.currentToken.getLexeme())) {
+    		msg += "EOF";
+    	} else {
+    		msg += this.currentToken.getLexeme();
+    	}
+    	return msg;
+    }
 
     private static final boolean isNonTerminal(int x)
     {

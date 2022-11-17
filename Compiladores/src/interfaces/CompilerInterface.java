@@ -522,12 +522,8 @@ public class CompilerInterface implements ParserConstants {
 				messageTextArea.setText("Erro na linha " + this.getLinePosition(err.getPosition()) + " - " + err.getMessage());
 			}
 		} catch (SyntaticError err) {
-			String errLineTxt = "EOF";
-
-			if (!this.getTextAtLine(err.getPosition()).isBlank()) {
-				errLineTxt = this.getTextAtLine(err.getPosition());
-			}
-
+			String errLineTxt = syntatic.getCurrentToken();
+			
 			if (tableLines.contains(err.getMessage())) {
 				int errTableLine = Integer.parseInt(err.getMessage());
 				messageTextArea.setText("Erro na linha " + this.getLinePosition(err.getPosition())
@@ -623,14 +619,14 @@ public class CompilerInterface implements ParserConstants {
 	
 	private String getMsgFromParserTable(int tableLine) {
     	int[][] parserConstTable = ParserConstants.PARSER_TABLE;
-    	var wrapper = new Object() { String columnMsg = ""; };
+    	String columnMsg = "";
     	
-    	IntStream.range(tableLine, parserConstTable[tableLine].length).forEach(columnIndex -> {
+    	for (int columnIndex = 0; columnIndex < parserConstTable[tableLine].length; columnIndex++) {
     		if (!(parserConstTable[tableLine][columnIndex] < 0)) {
-    			wrapper.columnMsg += " " + this.createSyntaticErrMsg(columnIndex) + " ";
+    			columnMsg += " " + this.createSyntaticErrMsg(columnIndex) + " ";
     		}
-    	});
-    	return wrapper.columnMsg;
+    	}
+    	return columnMsg;
     }
 
     private String createSyntaticErrMsg(int columnIndex) {
@@ -641,13 +637,13 @@ public class CompilerInterface implements ParserConstants {
 		} else if (columnIndex == 1) {
 			msg += "id";
 		} else if (columnIndex == 2) {
-			msg += "intw";
+			msg += "constante_int";
 		} else if (columnIndex == 3) {
-			msg += "flt"; 
+			msg += "constante_float"; 
 		} else if (columnIndex == 4) {
-			msg += "chr";
+			msg += "constante_char";
 		} else if (columnIndex == 5) {
-			msg += "str";
+			msg += "constante_string";
 		} else if (columnIndex == 6) {
 			msg += "boolean";
 		} else if (columnIndex == 7) {
