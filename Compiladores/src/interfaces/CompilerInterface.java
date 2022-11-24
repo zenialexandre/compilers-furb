@@ -513,7 +513,8 @@ public class CompilerInterface implements ParserConstants {
 		
 		try {
 			syntatic.parse(lexic, semantic);
-			messageTextArea.setText("programa compilado com sucesso");
+			this.clearMessageArea();
+			messageTextArea.setText("\n" + semantic.code);
 		} catch (LexicalError err) {
 			if (("simbolo invalido").equalsIgnoreCase(err.getMessage())) {
 				messageTextArea.setText("Erro na linha " + this.getLinePosition(err.getPosition()) 

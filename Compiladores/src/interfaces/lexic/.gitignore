@@ -1,0 +1,11 @@
+/AnalysisError.class
+/Constants.class
+/LexicalError.class
+/Lexico.class
+/ParserConstants.class
+/ScannerConstants.class
+/SemanticError.class
+/Semantico.class
+/Sintatico.class
+/SyntaticError.class
+/Token.class
