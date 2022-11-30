@@ -1,6 +1,6 @@
 package interfaces.lexic;
 
-import java.util.ArrayList;
+import interfaces.lexic.SemanticError;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -8,21 +8,17 @@ public class Semantico implements Constants {
 	private String operador = "";
 	public String code = "";
 	//int codigo = 0;
-	private Stack pilha_tipos = new Stack();
-	private Stack tipo_var = new Stack();
+	private Stack<String> pilha_tipos = new Stack<>();
+	private Stack<String> tipo_var = new Stack<>();
 	private String lista_id = "";
-	private Stack pilha_rotulos = new Stack();
+	private Stack<String> pilha_rotulos = new Stack<>();
 	private HashMap<String, String> tabela_simbolos = new HashMap<>();
 	
     public void executeAction(int action, Token token)	throws SemanticError {  	
         System.out.println("Acao #"+action+", Token: "+ token);
-        String lexeme = "";
-        if (token != null) {
-        	lexeme = token.getLexeme();	
-        }
         
+        String lexeme = this.getLexemeFromToken(token);
 		boolean isConstant = lexeme.contains("d");
-
         
         switch (action) {
         	case 1:
@@ -33,8 +29,9 @@ public class Semantico implements Constants {
         		break;
         	case 4:
         		break;
+
         	case 5:
-        		pilha_tipos.add("int64");
+        		pilha_tipos.push("int64");
         		int valorTotal = 0;
 
         		if (isConstant) {
@@ -47,8 +44,9 @@ public class Semantico implements Constants {
         		code += "\n\tldc.i8 " + (isConstant ? valorTotal : lexeme) + "\n";
         		code += "\tconv.r8";
         		break;
+
         	case 6:
-        		pilha_tipos.add("float64");
+        		pilha_tipos.push("float64");
         		double valorTotalFloat = 0f;
         		
         		if (isConstant) {
@@ -60,22 +58,54 @@ public class Semantico implements Constants {
         		
         		code += "\n\tldc.r8 " + (isConstant ? valorTotalFloat : lexeme);        		
         		break;
+
         	case 7:
         		break;
+
         	case 8:
         		break;
+
         	case 9:
+        		this.operador = token.getLexeme();
         		break;
+
         	case 10:
         		break;
+
         	case 11:
+        		this.pilha_tipos.push("bool");
+        		code += "\n\tldc.i4.1";
         		break;
+
         	case 12:
+        		this.pilha_tipos.push("bool");
+        		code += "\n\tldc.i4.0";
         		break;
+
         	case 13:
+        		String typeFor13 = this.pilha_tipos.pop();
+        		
+        		if ("bool".equalsIgnoreCase(typeFor13)) {
+        			this.pilha_tipos.push("bool");
+        		} else {
+        			throw new SemanticError("tipo incompativel em expressao logica");
+        		}
+        		
+        		code += "\n\tldc.i4.1";
+        		code += "\n\txor";
         		break;
+
         	case 14:
+        		// VERIFICAR
+        		
+        		String typeFor14 = this.pilha_tipos.pop();
+        		
+        		if ("int64".equalsIgnoreCase(typeFor14)) {
+        			code += "\n\tconv.i8";
+        		}
+        		code += ("\n\tcall void [mscorlib]System.Console::Write(" + typeFor14 + ")");
         		break;
+
         	case 15:
         		code += ".assembly extern mscorlib {}\n"
         				+ ".assembly _codigo_objeto{}\n"
@@ -84,6 +114,7 @@ public class Semantico implements Constants {
         				+ ".method static public void _principal() {\n"
         				+ "\t.entrypoint";
         		break;
+
         	case 16:
         		code += "\n\tret\n"
         				+ "\t}\n"
@@ -110,5 +141,12 @@ public class Semantico implements Constants {
         	default:
         		break;
         }
+    }
+    
+    private String getLexemeFromToken(Token token) {
+    	if (token != null) {
+        	return token.getLexeme();	
+        }
+    	return "";
     }
 }
