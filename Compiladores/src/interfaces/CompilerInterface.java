@@ -54,8 +54,11 @@ import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -73,6 +76,7 @@ public class CompilerInterface implements ParserConstants {
 	private TextArea messageTextArea;
 	private JLabel statusBarLabel;
 	private File currentFile;
+	private Integer globalCounter = 1;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -514,7 +518,10 @@ public class CompilerInterface implements ParserConstants {
 		try {
 			syntatic.parse(lexic, semantic);
 			this.clearMessageArea();
-			messageTextArea.setText("\n" + semantic.code);
+			//messageTextArea.setText("programa compilado com sucesso");
+			messageTextArea.setText(semantic.code);
+			this.saveCompiledCode(semantic);
+			//messageTextArea.setText("\n" + semantic.code);
 		} catch (LexicalError err) {
 			if (("simbolo invalido").equalsIgnoreCase(err.getMessage())) {
 				messageTextArea.setText("Erro na linha " + this.getLinePosition(err.getPosition()) 
@@ -535,6 +542,25 @@ public class CompilerInterface implements ParserConstants {
 			}
 		} catch (SemanticError err) {
 			// Trata erros semanticos.
+		}
+	}
+	
+	private void saveCompiledCode(Semantico semantic) {
+		try {
+			File newFile = new File("C:\\Users\\zenia\\teste" + this.globalCounter++ + ".il");
+			FileWriter fileWriter = new FileWriter(newFile, true);
+			
+			try {
+				BufferedWriter writer = new BufferedWriter(fileWriter);
+				writer.newLine();
+				writer.write(semantic.code);
+				writer.flush();
+				writer.close();
+			} catch (Exception e) {
+				e.getMessage();
+			}
+		} catch (IOException e) {
+			e.getMessage();
 		}
 	}
 
