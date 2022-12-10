@@ -286,7 +286,7 @@ public class CompilerInterface implements ParserConstants {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					compile();
-				} catch (BadLocationException err) {
+				} catch (BadLocationException | IOException err) {
 					err.printStackTrace();
 				}
 			}
@@ -388,7 +388,7 @@ public class CompilerInterface implements ParserConstants {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					compile();
-				} catch (BadLocationException err) {
+				} catch (BadLocationException | IOException err) {
 					err.printStackTrace();
 				}
 			}
@@ -484,7 +484,7 @@ public class CompilerInterface implements ParserConstants {
 		}
 	}
 	
-	private void compile() throws BadLocationException {
+	private void compile() throws BadLocationException, IOException {
 		this.clearMessageArea();
 		ArrayList<String> tableLines = new ArrayList<>(Arrays.asList(
 				"0",
@@ -516,12 +516,11 @@ public class CompilerInterface implements ParserConstants {
 		lexic.setInput(getEditorText());
 		
 		try {
+			this.saveFile();
 			syntatic.parse(lexic, semantic);
 			this.clearMessageArea();
-			//messageTextArea.setText("programa compilado com sucesso");
-			messageTextArea.setText(semantic.code);
+			messageTextArea.setText("programa compilado com sucesso");
 			this.saveCompiledCode(semantic);
-			//messageTextArea.setText("\n" + semantic.code);
 		} catch (LexicalError err) {
 			if (("simbolo invalido").equalsIgnoreCase(err.getMessage())) {
 				messageTextArea.setText("Erro na linha " + this.getLinePosition(err.getPosition()) 
@@ -541,14 +540,18 @@ public class CompilerInterface implements ParserConstants {
 				+ " - encontrado " + errLineTxt + " - " + err.getMessage());
 			}
 		} catch (SemanticError err) {
-			// Trata erros semanticos.
+			messageTextArea.setText(err.getMessage());
 		}
 	}
 	
 	private void saveCompiledCode(Semantico semantic) {
 		try {
-			File newFile = new File("C:\\Users\\zenia\\teste" + this.globalCounter++ + ".il");
-			FileWriter fileWriter = new FileWriter(newFile, true);
+			String currentFileName = currentFile.getName();
+			String newCodeFileName = currentFileName.substring(0, currentFileName.indexOf(".")) + ".il";
+			String newFilePath = currentFile.getAbsolutePath();
+			String newCodePath = newFilePath.substring(0, newFilePath.indexOf(currentFileName));
+			File newFile = new File(newCodePath + newCodeFileName);
+			FileWriter fileWriter = new FileWriter(newFile, false);
 			
 			try {
 				BufferedWriter writer = new BufferedWriter(fileWriter);
