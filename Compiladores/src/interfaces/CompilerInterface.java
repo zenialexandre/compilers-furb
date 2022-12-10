@@ -630,7 +630,7 @@ public class CompilerInterface implements ParserConstants {
 		statusBarLabel.setText(null);
 	}
 	
-	private int getLinePosition(int position) {
+	public int getLinePosition(int position) {
 		editorPanel.setCaretPosition(position);
 		Element root = editorPanel.getDocument().getDefaultRootElement();
 		return root.getElementIndex(editorPanel.getCaretPosition()) + 1;

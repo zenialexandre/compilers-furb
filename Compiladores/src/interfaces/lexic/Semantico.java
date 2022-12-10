@@ -1,8 +1,5 @@
 package interfaces.lexic;
 
-import interfaces.lexic.SemanticError;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -11,12 +8,12 @@ import java.util.Stack;
 public class Semantico implements Constants {
 	private String operador = "";
 	public String code = "";
-	//int codigo = 0;
 	private Stack<String> pilha_tipos = new Stack<>();
 	private String tipo_var = "";
 	private ArrayList<String> lista_id = new ArrayList<>();
 	private Stack<String> pilha_rotulos = new Stack<>();
 	private HashMap<String, String> tabela_simbolos = new HashMap<>();
+	private Integer globalLabelCounter = 1;
 	
     public void executeAction(int action, Token token)	throws SemanticError {  	
         System.out.println("Acao #"+action+", Token: "+ token);
@@ -157,8 +154,30 @@ public class Semantico implements Constants {
         		break;
 
         	case 10:
+        		String tipo1 = this.pilha_tipos.pop();
+        		String tipo2 = this.pilha_tipos.pop();
         		
-        		break;
+        		if ((!"int64".equalsIgnoreCase(tipo1) && !"float64".equalsIgnoreCase(tipo1)) 
+        				&& (!"int64".equalsIgnoreCase(tipo2) && !"float64".equalsIgnoreCase(tipo2))) {
+        			throw new SemanticError("Erro na linha " + token.getPosition() + " incompatíveis em expressão aritmetica");
+        		}
+        		
+        		if (tipo1.equalsIgnoreCase(tipo2)) {
+        			this.pilha_tipos.push(tipo1);
+        		} else {
+        			throw new SemanticError("Erro na linha " + token.getPosition() + " incompatíveis em expressão aritmetica");
+        		}
+        		
+        		
+                if (">".equalsIgnoreCase(operador))
+                	code += "cgt\n";
+                else if ("<".equalsIgnoreCase(operador))
+                    code += "clt\n";
+                else if ("==".equalsIgnoreCase(operador))
+                    code += "ceq\n";
+                else
+                    throw new SemanticError("Erro na linha " + token.getPosition() + " incompatíveis em expressão relacional");
+                break;
 
         	case 11:
         		this.pilha_tipos.push("bool");
@@ -183,9 +202,7 @@ public class Semantico implements Constants {
         		code += "\n\txor\n";
         		break;
 
-        	case 14:
-        		// VERIFICAR
-        		
+        	case 14:        		
         		String typeFor14 = this.pilha_tipos.pop();
         		
         		if ("int64".equalsIgnoreCase(typeFor14)) {
@@ -265,11 +282,23 @@ public class Semantico implements Constants {
         		
         		code += "ldstr " + lexeme + "\n";
         		break;
-        	case 23:
-        		break;
         	case 24:
+        		code += "brfalse " + this.createLabel() + "\n";
         		break;
         	case 25:
+        		String oldLabel = this.pilha_rotulos.pop();
+        		String newLabel = this.createLabel();
+        		code += "br " + newLabel + "\n";
+        		code += oldLabel += ":" + "\n";
+        		break;
+        	case 26:
+        		code += this.pilha_rotulos.pop() + ":" + "\n";
+        		break;
+        	case 27:
+        		code += this.createLabel() + ":" + "\n";
+        		break;
+        	case 28:
+        		code += "brtrue " + this.pilha_rotulos.pop() + "\n";
         		break;
         	case 30:
         		switch (lexeme) {
@@ -366,5 +395,12 @@ public class Semantico implements Constants {
         	return token.getLexeme();	
         }
     	return "";
+    }
+    
+    private String createLabel() {
+    	String newLabel = "l" + this.globalLabelCounter;
+    	this.pilha_rotulos.push(newLabel);
+    	this.globalLabelCounter++;
+    	return newLabel;
     }
 }
